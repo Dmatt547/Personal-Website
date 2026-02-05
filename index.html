@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Portfolio</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="mediaqueries.css" />
+    <link rel="stylesheet" href="custom_styles.css" />
+  </head>
+
+  <script>
+    window.addEventListener("scroll", () => {
+      const nav = document.getElementById("desktop-nav");
+      if (window.scrollY > 30) nav.classList.add("scrolled");
+      else nav.classList.remove("scrolled");
+    });
+  </script>
+
+
+
+  <body>
+
+    <div id="particles"></div>
+
+    <nav id="desktop-nav" class="header">
+       <div class="header-section__pic-container">
+            <img src="./assets/Daniel-Mattioli-logo.png" alt="logo" />
+          </div>
+
+      <div>
+        <ul class="nav-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <nav id="hamburger-nav">
+      <div class="logo">Daniel Mattioli</div>
+      <div class="hamburger-menu">
+        <div class="hamburger-icon">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <ul class="menu-links">
+          <li><a href="#about">About</a></li>
+          <li><a href="#experience">Skills</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <section id="profile">
+          <div class="section__pic-container">
+            <img src="./assets/profile-pic1.png" alt="Daniel Mattioli profile picture" />
+          </div>
+          <div class="section__text">
+            <h1 class="title">Daniel Mattioli</h1>
+            <p class="section__text__p2">Software Engineering Student</p>
+            <div class="btn-container">
+
+
+              <a class="btn btn-color-2" onclick="window.open('./assets/Daniel-Mattioli-Resume.pdf')" href="#">
+                <span class="texts">Download Resume</span>
+              </a>
+
+              <a class="btn btn-color-2" onclick="location.href='./#contact'">
+                <span class="texts">Contact Me</span>
+              </a>
+
+            </div>
+            <div id="socials-container" class="links">
+              <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg" class="icons-social-media" onclick="window.open('https://www.linkedin.com/in/daniel-matti/', '_blank')">
+                <path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"></path>
+              </svg>
+              
+              <svg viewBox="0 0 496 512" xmlns="http://www.w3.org/2000/svg" class="icons-social-media" onclick="window.open('https://github.com/Dmatt547', '_blank')">
+                <path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"></path>
+              </svg>
+            </div>
+          </div>
+          <img
+            src="./assets/arrow.png"
+            alt="Arrow icon"
+            class="icon arrow"
+            onclick="location.href='./#about'"
+          />
+    </section>
+
+    <section id="about">
+      <h1 class="title">About Me</h1>
+      <div class="section-container">
+        <div class="about-details-container">
+          <div class="about-containers">
+            <div class="details-container">
+              <img
+                src="./assets/experience.png"
+                alt="Experience icon"
+                class="icon"
+              />
+              <h3>Experience</h3>
+              <p>Software Developer (Front-End & IoT) <br />Currently interning at HAVI Technology</p>
+            </div>
+            <div class="details-container">
+              <img
+                src="./assets/education.png"
+                alt="Education icon"
+                class="icon"
+              />
+              <h3>Education</h3>
+              <p>Bachelor of Software Engineering (Honours)<br />Deakin University — Class of 2026</p>
+            </div>
+          </div>
+          <div class="text-container">
+            <p>
+              Hi, I'm Daniel Mattioli - a software developer and Software Engineering student at Deakin University.
+
+              I love building things that solve real problems - from web apps and IoT systems to full-stack projects that connect hardware and software. 
+              I've worked with technologies like React, Node.js, ASP.NET Core, and C++, and I enjoy learning how to make systems faster, smarter, and easier to use.
+
+              I'm currently an intern at HAVI Technology, gaining hands-on experience in modern development practices and team collaboration. 
+              My goal is to keep growing as a developer and eventually design software that makes everyday tasks simpler and more connected.
+            </p>
+          </div>
+        </div>
+      </div>
+      <img
+        src="./assets/arrow.png"
+        alt="Arrow icon"
+        class="icon arrow"
+        onclick="location.href='./#experience'"
+      />
+    </section>
+
+    <section id="experience">
+      <h1 class="title">Skills</h1>
+      <div class="experience-details-container">
+        <div class="about-containers">
+          <div class="details-container">
+            <h2 class="experience-sub-title">Frontend & General Programming</h2>
+            <div class="article-container">
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>HTML / CSS</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>JavaScript</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>React</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>Python</h3>
+                  <p>Basic</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>C# & C++</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>SQL</h3>
+                  <p>Basic</p>
+                </div>
+              </article>
+            </div>
+          </div>
+          <div class="details-container">
+            <h2 class="experience-sub-title">Backend & Tools</h2>
+            <div class="article-container">
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>PostgreSQL / MongoDB</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>Node.js / Express</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>ASP.NET Core (C#)</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>Version Control (GitHub)</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>Arduino (IoT / MQTT)</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>Docker</h3>
+                  <p>Basic</p>
+                </div>
+              </article>
+
+              <article>
+                <img
+                  src="./assets/checkmark.png"
+                  alt="Experience icon"
+                  class="icon"
+                />
+                <div>
+                  <h3>Testing (Selenium, Postman)</h3>
+                  <p>Intermediate</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+      <img
+        src="./assets/arrow.png"
+        alt="Arrow icon"
+        class="icon arrow"
+        onclick="location.href='./#projects'"
+      />
+    </section>
+
+<section id="projects">
+      <h1 class="title">Projects</h1>
+
+      <div class="experience-details-container">
+
+        <!-- ROW 1 -->
+        <div class="about-containers">
+          <!-- BugBox AI Tutor Bot -->
+          <div class="details-container color-container project-card">
+            <div class="article-container">
+              <img src="./assets/Bugbox (1).png" alt="BugBox AI Tutor Bot" class="project-img" />
+            </div>
+            <div class="project-overlay">
+              <h2 class="project-title">BugBox AI Tutor Bot</h2>
+              <p class="project-tagline">React + OpenAI API + Firebase — lesson-aware tutoring chatbot with file upload & chat history.</p>
+              <div class="btn-container">
+                <button class="btn btn-color-2" onclick="window.open('https://github.com/Redback-Operations', '_blank')">
+                  Github
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://youtu.be/I7CJsaXDyTA', '_blank')">
+                  Demo Video
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Smart Home Lighting (IoT) -->
+          <div class="details-container color-container project-card">
+            <div class="article-container">
+              <img src="./assets/smart-home-lighting.jpg" alt="Smart Home Lighting System" class="project-img" />
+            </div>
+            <div class="project-overlay">
+              <h2 class="project-title">Smart Home Lighting (IoT)</h2>
+              <p class="project-tagline">Arduino Nano 33 IoT + MQTT + Node-RED + AWS — scalable multi-node lighting network & dashboard.</p>
+              <div class="btn-container">
+                <button class="btn btn-color-2" onclick="window.open('https://github.com/Dmatt547/Smart-Home-Lighting-IoT-.git', '_blank')">
+                  Github
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://youtu.be/etTVIA0uA3g', '_blank')">
+                  Demo Video
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Robot Simulator API -->
+          <div class="details-container color-container project-card">
+            <div class="article-container">
+              <img src="./assets/robot-api.jpg" alt="Robot Simulator Web API" class="project-img" />
+            </div>
+            <div class="project-overlay">
+              <h2 class="project-title">Robot Simulator APII</h2>
+              <p class="project-tagline">ASP.NET Core (C#) — REST API with auth, maps & robot commands, tested in Postman.</p>
+              <div class="btn-container">
+                <button class="btn btn-color-2" onclick="window.open('https://github.com/Dmatt547/Robot-Simulator-API.git', '_blank')">
+                  Github
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://youtu.be/li689rn6q-Q', '_blank')">
+                  Demo Video
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW 2 -->
+        <div class="about-containers">
+          <!-- Farmyard Racing -->
+          <div class="details-container color-container project-card">
+            <div class="article-container">
+              <img src="./assets/farm-yard-racing.png" alt="Farmyard Racing Game" class="project-img" />
+            </div>
+            <div class="project-overlay">
+              <h2 class="project-title">Farmyard Racing (UE)</h2>
+              <p class="project-tagline">Unity + C# — team AGILE sprint; core gameplay, UI and CI on GitHub.</p>
+              <div class="btn-container">
+                <button class="btn btn-color-2" onclick="window.open('https://github.com/Dmatt547/Farmyard-Racing.git', '_blank')">
+                  Github
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://youtu.be/kkUTy7rGh44', '_blank')">
+                  Demo Video
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Automatic Dog Feeder -->
+          <div class="details-container color-container project-card">
+            <div class="article-container">
+              <img src="./assets/dog-feeder.png" alt="Automatic Dog Feeder" class="project-img" />
+            </div>
+            <div class="project-overlay">
+              <h2 class="project-title">Automatic Dog Feeder</h2>
+              <p class="project-tagline">Arduino + Load Cell + Servo + Raspberry Pi GUI — dispenses to target weight, telemetry</p>
+              <div class="btn-container">
+                <button class="btn btn-color-2" onclick="window.open('https://github.com/Dmatt547/Automatic-Dog-Feeder-Final.git', '_blank')">
+                  Github
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://youtu.be/B0yXcGgZ2DM', '_blank')">
+                  Demo Video
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- RFID Door Lock -->
+          <div class="details-container color-container project-card">
+            <div class="article-container">
+              <img src="./assets/rfid-door-lock.jpg" alt="RFID Door Locking System" class="project-img" />
+            </div>
+            <div class="project-overlay">
+              <h2 class="project-title">RFID Door Lock</h2>
+              <p class="project-tagline">Arduino + RFID + Servo + LCD — authorized tag access with on-device feedback.</p>
+              <div class="btn-container">
+                <button class="btn btn-color-2" onclick="window.open('https://github.com/Dmatt547/RFID-Door-Lock.git', '_blank')">
+                  Github
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://youtu.be/J_LT6efaz0M', '_blank')">
+                  Demo Video
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROW 3 -->
+        <div class="about-containers">
+          <!-- Parallel Programming Study -->
+          <div class="details-container color-container parallel-programming-card project-card">
+            <div class="article-container">
+              <img src="./assets/parallel-programming.jpg" alt="Parallel Programming Study" class="project-img" />
+            </div>
+            <div class="project-overlay">
+              <h2 class="project-title">Parallel Programming Study</h2>
+              <p class="project-tagline">C++ with std::thread / OpenMP / MPI — performance comparison & benchmarks.</p>
+              <div class="btn-container">
+                <button class="btn btn-color-2" onclick="window.open('https://github.com/Dmatt547/Parallel-Programming---MPI-vs-OMP-vs-opencl.git', '_blank')">
+                  Github
+                </button>
+                <button class="btn btn-color-2" onclick="window.open('https://youtu.be/I7CJsaXDyTA', '_blank')">
+                  Demo Video
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <img src="./assets/arrow.png" alt="Arrow icon" class="icon arrow"
+          onclick="location.href='./#contact'"/>
+    </section>
+
+    <section id="contact">
+      <h1 class="title">Contact Me Below</h1>
+
+      <div class="experience-details-container">
+        <div class="about-containers">
+          <!-- Same card classes as your other sections -->
+          <div class="details-container color-container contact-card">
+            <form id="contact-form" class="contact-form">
+              <div class="contact-grid">
+                <input type="text" id="name" placeholder="Your Name" required />
+                <input type="email" id="email" placeholder="Your Email" required />
+              </div>
+
+              <textarea id="message" placeholder="Your Message" rows="6" required></textarea>
+
+              <div class="btn-container">
+                <button type="submit" class="btn btn-color-1">Send Message</button>
+              </div>
+
+              <p id="form-status" class="form-status"></p>
+            </form>
+          </div>
+        </div>
+      </div>
+      <script>
+        const API_URL = "http://localhost:5000/send-email";
+
+        document.addEventListener("DOMContentLoaded", () => {
+          const form = document.getElementById("contact-form");
+          const statusEl = document.getElementById("form-status");
+
+          form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            statusEl.textContent = "Sending...";
+
+            const payload = {
+              name: document.getElementById("name").value.trim(),
+              email: document.getElementById("email").value.trim(),
+              message: document.getElementById("message").value.trim(),
+            };
+
+            try {
+              const res = await fetch(API_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+              });
+              const data = await res.json();
+              statusEl.textContent = data.message || "Sent!";
+              if (data.success) form.reset();
+            } catch (err) {
+              console.error(err);
+              statusEl.textContent = "Network error. Check server/URL.";
+            }
+          });
+        });
+      </script>
+    </section>
+
+    <footer>
+      <nav>
+        <div class="nav-links-container">
+          <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#experience">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </nav>
+      <p>Copyright &#169; 2025 Daniel Mattioli. All Rights Reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+
+    <script>
+      const hamburger = document.querySelector('.hamburger-icon');
+      const menuLinks = document.querySelector('.menu-links');
+      const menuItems = document.querySelectorAll('.menu-links a');
+
+      // Toggle menu when hamburger is clicked
+      hamburger.addEventListener('click', () => {
+        menuLinks.classList.toggle('open');
+      });
+
+      // Close menu when any link is clicked
+      menuItems.forEach(item => {
+        item.addEventListener('click', () => {
+          menuLinks.classList.remove('open');
+        });
+      });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+    <script src="particles.js"></script>
+
+    <script>
+      const cards = document.querySelectorAll("#projects .project-card");
+
+      cards.forEach(card => {
+        card.addEventListener("click", () => {
+          cards.forEach(c => {
+            if (c !== card) c.classList.remove("active");
+          });
+          card.classList.toggle("active");
+        });
+      });
+    </script>
+
+  </body>
+</html>

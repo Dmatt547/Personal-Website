@@ -1,0 +1,81 @@
+/* =========================
+   SHARED BUTTON LAYOUT
+   ========================= */
+.btn-container {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* shared size + text */
+.button,
+.resume-button {
+  width: 180px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.resume-button .texts,
+.button .text {
+  font-family: "Poppins", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+/* =========================
+   RESUME BUTTON
+   ========================= */
+.resume-button {
+  border: 2px solid #000;
+  border-radius: 9999px;
+  background-color: #000;
+  color: #fff;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.resume-button:hover {
+  background-color: transparent;
+  color: #000;
+}
+
+/* =========================
+   HELLO / SOURCE BUTTON
+   ========================= */
+.button {
+  background-color: #181717;
+  outline: 3px #181717 solid;
+  outline-offset: -3px;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: 400ms;
+  color: #fff;
+  gap: 15px;
+}
+
+.button svg path {
+  transition: 400ms;
+}
+
+.button:hover {
+  background-color: transparent;
+}
+
+.button:hover .text {
+  color: #181717;
+}
+
+.button:hover svg path {
+  fill: #181717;
+}
+
+#projects .btn-container {
+  flex-direction: row;
+}
+
+
