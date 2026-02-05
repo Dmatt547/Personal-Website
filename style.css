@@ -470,6 +470,7 @@ section {
 .about-details-container {
   justify-content: center;
   flex-direction: column;
+  margin: 0 auto;
 }
 
 .about-pic {
@@ -548,6 +549,7 @@ section {
 .btn-color-2 {
   border: 2px solid var(--accent);
   color: var(--accent);
+  text-decoration: none;
 }
 
 .btn-color-1:hover,
@@ -611,7 +613,7 @@ section {
   display: flex;
   justify-content: center;
   flex-direction: column;
-  max-width: 1200px;
+  max-width: 1275px;
   margin: 0 auto;
   padding: 30px;
 }
@@ -699,7 +701,7 @@ section {
 #projects .experience-details-container {
   display: flex;
   justify-content: center;
-  max-width: 1200px;
+  max-width: 1275px;
   margin: 0 auto;
 }
 
@@ -1057,7 +1059,7 @@ section {
 #contact .details-container.color-container,
 #contact .contact-card {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1275px;
   box-sizing: border-box;
 }
 
