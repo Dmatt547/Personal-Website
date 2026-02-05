@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Particles</title>
+
+  <style>
+    /* This code is temporary, since the particles by default doesn't have any background, and white particles on white bg */
+    body {
+      background-color: rgb(62, 52, 206);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- tsParticles div, not required, but it's recommended -->
+  <div id="tsparticles"></div>
+
+  <!-- https://www.jsdelivr.com/package/npm/tsparticles -->
+  <!-- https://github.com/matteobruni/tsparticles -->
+  <!-- The bundle file contains all the necessary scripts, instead of manually including them all -->
+  <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.0.6/tsparticles.bundle.min.js"></script>
+
+  <script>
+    /* tsParticles.load has two parameters, the first one is the id of the container, the second one is an object with the options */
+    tsParticles.load("tsparticles", {
+      particles: {
+        links: {
+          enable: false // this enables links between particles
+        },
+        move: {
+          enable: true // this makes particles move
+        },
+        size: {
+          value: 5  // this sets the size of the particles
+        }
+      }
+    });
+  </script>
+
+</body>
+</html>
