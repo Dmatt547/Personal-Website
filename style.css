@@ -96,12 +96,16 @@ nav {
   align-items: center;
 }
 
-.smaller-logo img {
-  height: 110px;
+.header-section__pic-container img {
+  height: 90px;
   width: 130px;
-  padding-top: 20px;
 }
 
+.smaller-logo img {
+  height: 90px;
+  width: 90px;
+  padding-top: 20px;
+}
 
 #profile .section__pic-container img {
   width: 100%;
