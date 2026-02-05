@@ -96,9 +96,10 @@ nav {
   align-items: center;
 }
 
-.header-section__pic-container img {
-  height: 90px;
+.smaller-logo img {
+  height: 110px;
   width: 130px;
+  padding-top: 20px;
 }
 
 
