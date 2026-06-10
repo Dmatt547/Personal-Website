@@ -676,6 +676,21 @@ img { display: block; max-width: 100%; }
   .skills { grid-template-columns: 1fr; }
   .projects { grid-template-columns: 1fr; }
   .about__stats { justify-content: space-between; gap: 1.2rem; }
+
+  /* Shrink the "graduating" badge into a small pill and move it
+     below the photo so it no longer covers the face. */
+  .portrait-badge {
+    bottom: -10%;
+    right: 50%;
+    transform: translateX(50%);   /* centre it under the photo */
+    flex-direction: row;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.4rem 0.85rem;
+    border-radius: 999px;
+  }
+  .portrait-badge__num { font-size: 0.95rem; }
+  .portrait-badge__label { font-size: 0.62rem; }
 }
 
 /* Small phone: scale type down and make buttons full-width */
