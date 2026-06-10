@@ -1,0 +1,712 @@
+/* ============================================================
+   Daniel Mattioli - Portfolio styles
+   Dark, modern theme
+   ============================================================
+   Contents:
+      1. Design tokens     - colours, fonts and sizes in one place
+      2. Base + reset       - sensible defaults for the whole page
+      3. Background         - decorative grid and glow layers
+      4. Buttons            - reusable .btn styles
+      5. Nav + mobile menu  - top bar and slide-in menu
+      6. Section shell      - shared section heading styles
+      7. Hero               - intro screen
+      8. About              - bio, stats and info cards
+      9. Skills             - skill groups and tags
+     10. Projects           - project cards
+     11. Contact            - contact card and links
+     12. Footer
+     13. Animations         - scroll reveal + reduced motion
+     14. Responsive         - breakpoints for tablet and phone
+
+   Tip: most colours come from the variables in section 1.
+   Change --accent there to recolour the whole site at once.
+   ============================================================ */
+
+
+/* ============================================================
+   1. DESIGN TOKENS
+   Reusable values. Edit here instead of hunting through the file.
+   ============================================================ */
+:root {
+  /* Surface colours (backgrounds, cards, borders) */
+  --bg: #07080d;                          /* page background */
+  --bg-soft: #0d0f17;                     /* slightly lighter background */
+  --surface: rgba(255, 255, 255, 0.03);   /* card background */
+  --surface-2: rgba(255, 255, 255, 0.05); /* card background on hover */
+  --border: rgba(255, 255, 255, 0.08);    /* normal border */
+  --border-strong: rgba(255, 255, 255, 0.14); /* highlighted border */
+
+  /* Text colours */
+  --text: #eef0f6;        /* main text */
+  --text-soft: #aeb3c2;   /* secondary text */
+  --text-mute: #6f7689;   /* faint labels */
+
+  /* Accent colour (used for highlights, links, buttons) */
+  --accent: #7aa2f7;
+  --grad: linear-gradient(120deg, #8ab0ff 0%, #6f8fe6 100%);      /* solid accent gradient */
+  --grad-soft: linear-gradient(120deg, rgba(122,162,247,.12), rgba(122,162,247,.12)); /* faint tint */
+
+  /* Shape + layout */
+  --radius: 16px;       /* normal corner rounding */
+  --radius-lg: 22px;    /* larger cards */
+  --maxw: 1120px;       /* max content width */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1); /* shared easing curve */
+
+  /* Fonts */
+  --font: "Inter", system-ui, -apple-system, sans-serif;  /* body text */
+  --font-display: "Space Grotesk", var(--font);           /* headings */
+}
+
+
+/* ============================================================
+   2. BASE + RESET
+   ============================================================ */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  scroll-behavior: smooth;   /* smooth jump when clicking nav links */
+  scroll-padding-top: 90px;  /* stops the fixed nav covering section tops */
+}
+
+body {
+  font-family: var(--font);
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;  /* hides the off-screen background glows */
+  position: relative;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+::selection { background: rgba(109,139,255,.35); color: #fff; }
+
+
+/* ============================================================
+   3. BACKGROUND
+   Three fixed, non-interactive layers behind the page.
+   ============================================================ */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  /* Faint grid made from two repeating gradients */
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px);
+  background-size: 60px 60px;
+  /* Fade the grid out toward the edges */
+  mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 25%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 70% at 50% 0%, #000 25%, transparent 75%);
+}
+
+/* Soft coloured blobs that give the page depth */
+.bg-glow {
+  position: fixed;
+  z-index: -1;
+  border-radius: 50%;
+  filter: blur(140px);
+  opacity: 0.32;
+  pointer-events: none;
+}
+.bg-glow--1 {                 /* blue glow, top-left */
+  width: 600px; height: 600px;
+  top: -220px; left: -140px;
+  background: radial-gradient(circle, rgba(122,162,247,.5), transparent 70%);
+}
+.bg-glow--2 {                 /* violet glow, mid-right */
+  width: 540px; height: 540px;
+  top: 280px; right: -180px;
+  background: radial-gradient(circle, rgba(138,110,255,.4), transparent 70%);
+  opacity: 0.26;
+}
+
+
+/* ============================================================
+   4. BUTTONS
+   .btn is the base. Add a colour modifier (--primary / --ghost)
+   and an optional size modifier (--sm / --lg).
+   ============================================================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font);
+  font-weight: 600;
+  font-size: 0.95rem;
+  padding: 0.8rem 1.4rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s, border-color .25s;
+  white-space: nowrap;
+}
+/* Filled accent button */
+.btn--primary {
+  background: var(--grad);
+  color: #0a0a12;
+  font-weight: 700;
+  box-shadow: 0 6px 18px rgba(122,162,247,.18);
+}
+.btn--primary:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(122,162,247,.26); }
+/* Outlined / transparent button */
+.btn--ghost {
+  background: var(--surface);
+  border-color: var(--border-strong);
+  color: var(--text);
+}
+.btn--ghost:hover { background: var(--surface-2); transform: translateY(-2px); border-color: var(--accent); }
+/* Size modifiers */
+.btn--sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
+.btn--lg { padding: 1rem 1.7rem; font-size: 1.02rem; }
+
+
+/* ============================================================
+   5. NAV + MOBILE MENU
+   ============================================================ */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1.1rem clamp(1.2rem, 5vw, 3rem);
+  transition: background .3s, border-color .3s, padding .3s;
+  border-bottom: 1px solid transparent;
+}
+/* Added by main.js once the page is scrolled down */
+.nav.scrolled {
+  background: rgba(7, 8, 13, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom-color: var(--border);
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+}
+.nav__logo { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-display); font-weight: 700; }
+.nav__logo-mark {                 /* the small "DM" square */
+  display: grid; place-items: center;
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: var(--grad);
+  color: #0a0a12;
+  font-size: 0.95rem;
+  letter-spacing: -0.5px;
+}
+.nav__logo-text { font-size: 1.02rem; }
+
+.nav__links { display: flex; gap: 0.4rem; }
+.nav__links a {
+  position: relative;
+  font-size: 0.94rem;
+  color: var(--text-soft);
+  padding: 0.5rem 0.9rem;
+  border-radius: 999px;
+  transition: color .2s, background .2s;
+}
+.nav__links a:hover { color: var(--text); }
+.nav__links a.active { color: var(--text); background: var(--surface-2); } /* current section */
+.nav__actions { display: flex; align-items: center; gap: 0.7rem; }
+
+/* Hamburger button (only shown on small screens) */
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none; border: none; cursor: pointer;
+  padding: 6px;
+}
+.nav__toggle span {
+  width: 24px; height: 2px; background: var(--text); border-radius: 2px;
+  transition: transform .3s, opacity .3s;
+}
+/* Turn the three bars into an X when open */
+.nav__toggle.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__toggle.open span:nth-child(2) { opacity: 0; }
+.nav__toggle.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* Slide-in panel for mobile (toggled by main.js) */
+.mobile-menu {
+  position: fixed;
+  top: 0; right: 0;
+  z-index: 99;
+  height: 100vh; width: min(78vw, 320px);
+  background: rgba(10, 11, 18, 0.96);
+  backdrop-filter: blur(16px);
+  border-left: 1px solid var(--border);
+  display: flex; flex-direction: column;
+  gap: 0.5rem;
+  padding: 6rem 1.6rem 2rem;
+  transform: translateX(110%);            /* hidden off-screen by default */
+  transition: transform .4s var(--ease);
+}
+.mobile-menu.open { transform: translateX(0); } /* slid into view */
+.mobile-menu a:not(.btn) {
+  font-size: 1.15rem; color: var(--text-soft);
+  padding: 0.7rem 0; border-bottom: 1px solid var(--border);
+}
+.mobile-menu .btn { margin-top: 1rem; justify-content: center; }
+
+
+/* ============================================================
+   6. SECTION SHELL
+   Shared wrapper + heading styles used by About, Skills,
+   Projects and Contact.
+   ============================================================ */
+.section {
+  position: relative;
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: clamp(4rem, 9vw, 7rem) clamp(1.2rem, 5vw, 2rem);
+}
+/* Optional tinted, full-width band behind a section.
+   Add the class "section--alt" in the HTML to use it. */
+.section--alt::before {
+  content: "";
+  position: absolute;
+  top: 0; bottom: 0;
+  left: 50%; transform: translateX(-50%);
+  width: 100vw;        /* stretch past the centred content */
+  z-index: -1;
+  background: rgba(255, 255, 255, 0.018);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+/* Section heading block */
+.section__head { position: relative; margin-bottom: 2.6rem; }
+/* Soft glow behind each heading for a bit of depth */
+.section__head::before {
+  content: "";
+  position: absolute;
+  top: -60px; left: -40px;
+  width: 320px; height: 200px;
+  background: radial-gradient(circle, rgba(122,162,247,.16), transparent 70%);
+  filter: blur(30px);
+  z-index: -1;
+  pointer-events: none;
+}
+/* Small pill label above each section title */
+.section__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-display);
+  font-size: 0.78rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--grad-soft);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  margin-bottom: 1rem;
+}
+.section__kicker::before {        /* small dot before the label text */
+  content: "";
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--accent);
+}
+.section__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.7rem, 4vw, 2.6rem);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  line-height: 1.15;
+}
+
+/* Makes the wrapped text show the accent gradient */
+.grad-text {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+
+/* ============================================================
+   7. HERO
+   Two columns on desktop: text on the left, photo on the right.
+   ============================================================ */
+.hero {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 4rem);
+  padding: 7rem clamp(1.2rem, 5vw, 2rem) 4rem;
+}
+
+/* Small status pill above the title */
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.95rem;
+  border-radius: 999px;
+  margin-bottom: 1.5rem;
+}
+.eyebrow__dot {                  /* small green "available" dot */
+  width: 8px; height: 8px; border-radius: 50%;
+  background: #5fd6a3;
+  box-shadow: 0 0 0 3px rgba(95,214,163,.16);
+}
+
+.hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -1.5px;
+  margin-bottom: 1.4rem;
+}
+.hero__lead {
+  font-size: clamp(1rem, 1.5vw, 1.12rem);
+  color: var(--text-soft);
+  max-width: 56ch;
+  margin-bottom: 2rem;
+}
+.hero__cta { display: flex; gap: 0.9rem; flex-wrap: wrap; margin-bottom: 2.2rem; }
+
+/* Round social icon buttons */
+.hero__socials { display: flex; gap: 0.9rem; }
+.hero__socials a {
+  display: grid; place-items: center;
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text-soft);
+  transition: transform .25s var(--ease), color .25s, border-color .25s, background .25s;
+}
+.hero__socials a:hover { transform: translateY(-3px); color: var(--text); border-color: var(--accent); background: var(--surface-2); }
+
+/* Profile photo with a gradient ring and small badge */
+.hero__portrait { position: relative; justify-self: center; }
+.portrait-ring {
+  position: relative;
+  width: clamp(240px, 30vw, 340px);
+  aspect-ratio: 1;
+  border-radius: 50%;
+  padding: 6px;
+  background: var(--grad);
+  box-shadow: 0 20px 60px rgba(0,0,0,.45);
+}
+.portrait-ring img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--bg);
+}
+.portrait-badge {                 /* the "2026 / Graduating" tag */
+  position: absolute;
+  bottom: 6%; right: -6%;
+  background: rgba(13,15,23,.85);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-strong);
+  border-radius: 14px;
+  padding: 0.7rem 1rem;
+  display: flex; flex-direction: column;
+  text-align: center;
+  box-shadow: 0 12px 30px rgba(0,0,0,.4);
+}
+.portrait-badge__num { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; }
+.portrait-badge__label { font-size: 0.72rem; color: var(--text-mute); text-transform: uppercase; letter-spacing: 1px; }
+
+
+/* ============================================================
+   8. ABOUT
+   Two columns: bio + stats on the left, two cards on the right.
+   ============================================================ */
+.about {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.6rem, 4vw, 3rem);
+  align-items: start;
+}
+.about__text p { color: var(--text-soft); margin-bottom: 1.1rem; }
+
+/* Row of quick stats (8+, 5+, 2026) */
+.about__stats { display: flex; gap: 1.6rem; margin-top: 1.8rem; flex-wrap: wrap; }
+.stat { display: flex; flex-direction: column; }
+.stat__num {
+  font-family: var(--font-display);
+  font-size: 1.9rem; font-weight: 700;
+  background: var(--grad);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.stat__label { font-size: 0.82rem; color: var(--text-mute); }
+
+/* Experience + education cards */
+.about__cards { display: flex; flex-direction: column; gap: 1.1rem; }
+.info-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: transform .3s var(--ease), border-color .3s, background .3s;
+}
+.info-card:hover { transform: translateY(-4px); border-color: var(--border-strong); background: var(--surface-2); }
+.info-card__icon {
+  display: grid; place-items: center;
+  width: 46px; height: 46px;
+  border-radius: 12px;
+  background: var(--grad-soft);
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+.info-card h3 { font-family: var(--font-display); font-size: 1.2rem; margin-bottom: 0.5rem; }
+.info-card__role { font-weight: 600; color: var(--text); }
+.info-card__meta { font-size: 0.88rem; color: var(--accent); margin-bottom: 0.6rem; }
+.info-card p:last-child { color: var(--text-soft); font-size: 0.94rem; }
+
+
+/* ============================================================
+   9. SKILLS
+   A grid of category cards, each holding small tag pills.
+   ============================================================ */
+.skills {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.1rem;
+}
+.skill-group {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  transition: border-color .3s, background .3s;
+}
+.skill-group:hover { border-color: var(--border-strong); background: var(--surface-2); }
+.skill-group__title {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  margin-bottom: 1.1rem;
+  color: var(--text);
+}
+/* Individual skill pills */
+.tags { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+.tag {
+  font-size: 0.85rem;
+  color: var(--text-soft);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  transition: color .2s, border-color .2s, transform .2s;
+}
+.tag:hover { color: var(--text); border-color: var(--accent); transform: translateY(-2px); }
+
+
+/* ============================================================
+   10. PROJECTS
+   Responsive card grid. Each card has an image, text and links.
+   ============================================================ */
+.projects {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.3rem;
+}
+.project {
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: transform .35s var(--ease), border-color .35s, box-shadow .35s;
+}
+.project:hover {
+  transform: translateY(-6px);
+  border-color: var(--border-strong);
+  box-shadow: 0 22px 50px rgba(0,0,0,.45);
+}
+/* Image area (fixed shape, image fills it) */
+.project__media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-soft); }
+.project__media img { width: 100%; height: 100%; object-fit: cover; transition: transform .5s var(--ease); }
+.project:hover .project__media img { transform: scale(1.06); } /* gentle zoom on hover */
+.project__media::after {            /* dark fade at the bottom of the image */
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(7,8,13,.55));
+}
+.project__body { padding: 1.3rem; display: flex; flex-direction: column; flex: 1; }
+.project__title { font-family: var(--font-display); font-size: 1.18rem; margin-bottom: 0.5rem; }
+.project__desc { font-size: 0.92rem; color: var(--text-soft); margin-bottom: 1rem; flex: 1; }
+/* Small tech tags */
+.project__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.1rem; }
+.project__tags span {
+  font-size: 0.74rem;
+  color: var(--accent);
+  background: var(--grad-soft);
+  border-radius: 6px;
+  padding: 0.2rem 0.55rem;
+}
+/* Code / Demo links */
+.project__links { display: flex; gap: 1.2rem; }
+.project__links a {
+  font-size: 0.88rem; font-weight: 600;
+  color: var(--text-soft);
+  transition: color .2s;
+}
+.project__links a:hover { color: var(--accent); }
+
+
+/* ============================================================
+   11. CONTACT
+   A single centred card with a mailto button and links.
+   ============================================================ */
+.contact {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: clamp(2.2rem, 6vw, 4rem);
+  position: relative;
+  overflow: hidden;
+}
+.contact::before {                /* soft glow inside the top of the card */
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(circle at 50% -20%, rgba(109,139,255,.18), transparent 60%);
+  pointer-events: none;
+}
+.contact__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  letter-spacing: -0.5px;
+  margin: 0.6rem 0 0.9rem;
+}
+.contact__lead { color: var(--text-soft); margin-bottom: 1.8rem; }
+.contact .btn--lg { max-width: 100%; }
+
+/* Row of GitHub / LinkedIn / Resume links */
+.contact__socials { display: flex; justify-content: center; gap: 1rem; margin-top: 1.8rem; flex-wrap: wrap; }
+.contact__social {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  font-size: 0.9rem; color: var(--text-soft);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  padding: 0.55rem 1rem; border-radius: 999px;
+  transition: color .2s, border-color .2s, transform .2s;
+}
+.contact__social:hover { color: var(--text); border-color: var(--accent); transform: translateY(-2px); }
+
+
+/* ============================================================
+   12. FOOTER
+   ============================================================ */
+.footer {
+  border-top: 1px solid var(--border);
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-mute);
+  font-size: 0.85rem;
+}
+
+
+/* ============================================================
+   13. ANIMATIONS
+   Elements with class "reveal" fade up into view. main.js adds
+   the "in" class when they scroll onto the screen.
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity .7s var(--ease), transform .7s var(--ease);
+}
+.reveal.in { opacity: 1; transform: none; }
+
+/* Respect users who prefer less motion: turn animations off */
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
+
+
+/* ============================================================
+   14. RESPONSIVE
+   Breakpoints get smaller down the list. Each one only changes
+   what is needed at that width.
+   ============================================================ */
+
+/* Tablet and below: stack the hero and about into one column */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    min-height: auto;
+    padding-top: 7rem;
+    gap: 2rem;
+  }
+  .hero__content { order: 2; }     /* photo first, text second */
+  .hero__portrait { order: 1; }
+  .hero__cta, .hero__socials { justify-content: center; }
+  .hero__lead { margin-inline: auto; }
+  .about { grid-template-columns: 1fr; }
+  .portrait-badge { right: 0; }
+}
+
+/* Mid tablet: show projects two-per-row */
+@media (min-width: 761px) and (max-width: 1024px) {
+  .projects { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Phone: switch to the hamburger menu and single-column grids */
+@media (max-width: 760px) {
+  html { scroll-padding-top: 76px; }
+  .nav { padding: 0.9rem 1.25rem; }
+  .nav__links { display: none; }          /* hide desktop links */
+  .nav__toggle { display: flex; }         /* show hamburger */
+  .nav__actions .btn--ghost { display: none; }
+  .nav__logo-text { display: none; }
+  .section { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .skills { grid-template-columns: 1fr; }
+  .projects { grid-template-columns: 1fr; }
+  .about__stats { justify-content: space-between; gap: 1.2rem; }
+}
+
+/* Small phone: scale type down and make buttons full-width */
+@media (max-width: 480px) {
+  .hero { padding-top: 6.5rem; }
+  .hero__title { font-size: 2rem; letter-spacing: -1px; }
+  .hero__lead { font-size: 0.98rem; }
+  .eyebrow { white-space: normal; text-align: center; max-width: 100%; }
+  .portrait-ring { width: 190px; }
+  .hero__cta { flex-direction: column; width: 100%; }
+  .hero__cta .btn { width: 100%; justify-content: center; }
+  .hero__socials a { width: 48px; height: 48px; }
+  .section__title { font-size: 1.5rem; }
+  .stat__num { font-size: 1.55rem; }
+  .info-card, .skill-group { padding: 1.25rem; }
+  .contact { padding: 2rem 1.1rem; }
+  .contact .btn--lg { width: 100%; font-size: 0.85rem; padding-inline: 0.9rem; word-break: break-word; }
+  .contact__socials { gap: 0.55rem; }
+  .footer { font-size: 0.8rem; padding: 1.5rem 1rem; }
+}
+
+/* Touch devices: cancel hover lifts so they do not get "stuck"
+   after a tap (touch screens keep the last :hover state). */
+@media (hover: none) {
+  .project:hover,
+  .info-card:hover,
+  .skill-group:hover,
+  .tag:hover,
+  .btn:hover,
+  .hero__socials a:hover,
+  .contact__social:hover,
+  .nav__links a:hover { transform: none; }
+  .project:hover .project__media img { transform: none; }
+}
