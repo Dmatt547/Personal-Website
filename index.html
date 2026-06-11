@@ -9,9 +9,12 @@
     3. Hero          - intro, photo, call-to-action buttons
     4. About         - bio, quick stats, experience/education
     5. Skills        - grouped technology tags
-    6. Projects      - grid of project cards
-    7. Contact       - email + social links
-    8. Footer        - copyright
+    6. Projects      - grid of project cards (click a card for its case study)
+    7. Thesis        - honours research highlight
+    8. Contact       - email + social links
+    9. Footer        - copyright
+
+  A reusable case study modal sits just before the footer.
 
   Styling lives in styles.css. Behaviour lives in main.js.
   Class names follow BEM: block__element--modifier.
@@ -50,6 +53,9 @@
     <div class="bg-glow bg-glow--1" aria-hidden="true"></div>
     <div class="bg-glow bg-glow--2" aria-hidden="true"></div>
 
+    <!-- Thin bar at the very top that fills up as you scroll the page -->
+    <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
     <!-- ============================================================
          2. NAV
          Fixed top bar. Links scroll to the matching section id.
@@ -67,6 +73,7 @@
         <a href="#about">About</a>
         <a href="#skills">Skills</a>
         <a href="#projects">Projects</a>
+        <a href="#thesis">Thesis</a>
         <a href="#contact">Contact</a>
       </nav>
 
@@ -84,6 +91,7 @@
       <a href="#about">About</a>
       <a href="#skills">Skills</a>
       <a href="#projects">Projects</a>
+      <a href="#thesis">Thesis</a>
       <a href="#contact">Contact</a>
       <a class="btn btn--primary" href="./assets/Daniel-Mattioli-Resume.pdf" target="_blank" rel="noopener">Download Resume</a>
     </div>
@@ -118,6 +126,11 @@
             View my work
             <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
           </a>
+          <!-- Opens the resume PDF in a new tab -->
+          <a class="btn btn--ghost" href="./assets/Daniel-Mattioli-Resume.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View Resume
+          </a>
           <a class="btn btn--ghost" href="#contact">Get in touch</a>
         </div>
 
@@ -138,7 +151,12 @@
       <!-- Right column: profile photo + badge -->
       <div class="hero__portrait reveal">
         <div class="portrait-ring">
-          <img src="./assets/Profile Pic.png" alt="Daniel Mattioli" />
+          <!-- Modern browsers load the small WebP; older ones fall back to the PNG.
+               fetchpriority="high" tells the browser to load this first (above the fold). -->
+          <picture>
+            <source srcset="./assets/profile-pic.webp" type="image/webp" />
+            <img src="./assets/Profile Pic.png" alt="Daniel Mattioli" width="663" height="700" fetchpriority="high" />
+          </picture>
         </div>
         <div class="portrait-badge">
           <span class="portrait-badge__num">2026</span>
@@ -160,7 +178,7 @@
 
       <div class="about">
         <!-- Bio text and quick stats -->
-        <div class="about__text reveal">
+        <div class="about__text reveal reveal--left">
           <p>
             I'm a final-year Software Engineering (Honours) student at Deakin University,
             based in Melbourne. I love building things that solve real problems - web apps,
@@ -175,16 +193,18 @@
           </p>
 
           <!-- Quick stats row -->
+          <!-- data-count is the number to count up to; data-suffix is added after it.
+               The visible text is the final value so it still shows if JS is off. -->
           <div class="about__stats">
-            <div class="stat"><span class="stat__num">8+</span><span class="stat__label">Shipped projects</span></div>
-            <div class="stat"><span class="stat__num">5+</span><span class="stat__label">Languages</span></div>
-            <div class="stat"><span class="stat__num">2026</span><span class="stat__label">Graduating</span></div>
+            <div class="stat"><span class="stat__num" data-count="8" data-suffix="+">8+</span><span class="stat__label">Shipped projects</span></div>
+            <div class="stat"><span class="stat__num" data-count="5" data-suffix="+">5+</span><span class="stat__label">Languages</span></div>
+            <div class="stat"><span class="stat__num" data-count="2026">2026</span><span class="stat__label">Graduating</span></div>
           </div>
         </div>
 
         <!-- Experience + education cards -->
         <div class="about__cards">
-          <article class="info-card reveal">
+          <article class="info-card reveal reveal--right">
             <div class="info-card__icon">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18v13H3z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round"/></svg>
             </div>
@@ -194,7 +214,7 @@
             <p>Delivering production-ready features in an Agile team: front-end work, API integration and IoT systems.</p>
           </article>
 
-          <article class="info-card reveal">
+          <article class="info-card reveal reveal--right">
             <div class="info-card__icon">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 10 5-10 5L2 8l10-5z"/><path d="M6 10.5V15c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5" stroke-linecap="round"/></svg>
             </div>
@@ -288,15 +308,50 @@
         <!-- Project: BugBox AI Tutor Bot -->
         <article class="project reveal">
           <div class="project__media">
-            <img src="./assets/Bugbox (1).png" alt="BugBox AI Tutor Bot" loading="lazy" />
+            <picture>
+              <source srcset="./assets/bugbox.webp" type="image/webp" />
+              <img src="./assets/Bugbox (1).png" alt="BugBox AI Tutor Bot" loading="lazy" width="748" height="760" />
+            </picture>
           </div>
           <div class="project__body">
             <h3 class="project__title">BugBox AI Tutor Bot</h3>
             <p class="project__desc">Lesson-aware tutoring chatbot with file upload and chat history. Led front-end and UI/UX with a focus on accessibility.</p>
             <div class="project__tags"><span>React</span><span>OpenAI API</span><span>Firebase</span></div>
             <div class="project__links">
+              <button class="project__more" type="button">Case study</button>
               <a href="https://github.com/Redback-Operations" target="_blank" rel="noopener">Code</a>
-              <a href="https://youtu.be/I7CJsaXDyTA" target="_blank" rel="noopener">Demo &#8594;</a>
+              <a href="./assets/BugBox-Presentation.pdf" target="_blank" rel="noopener">Presentation &#8594;</a>
+            </div>
+          </div>
+
+          <!-- Hidden case study. main.js copies this into the modal on click. -->
+          <div class="project__details" hidden>
+            <span class="case__kicker">Case study</span>
+            <h3 class="case__title">BugBox AI Tutor Bot</h3>
+            <p class="case__meta">React &middot; OpenAI API &middot; Firebase &middot; Team project</p>
+            <div class="case__tags"><span>React</span><span>OpenAI API</span><span>Firebase</span><span>WCAG</span></div>
+
+            <h4>Overview</h4>
+            <p>BugBox is a chat-based tutoring bot that helps students learn through lesson-aware conversations. It answers questions in the context of a specific lesson, accepts file uploads for richer help, and keeps a history of past chats.</p>
+
+            <h4>My role</h4>
+            <p>I led the front-end and UI/UX as part of an Agile team, and contributed to planning and documentation. Accessibility was a priority, so I worked to meet WCAG standards.</p>
+
+            <h4>What I built</h4>
+            <ul>
+              <li>Chat interface that sends prompts to the OpenAI API and returns tutoring responses</li>
+              <li>File upload system so students can share work for feedback</li>
+              <li>Lesson-specific responses so answers stay on topic</li>
+              <li>Persistent chat history stored in Firebase</li>
+              <li>Accessible, clean UI following WCAG guidelines</li>
+            </ul>
+
+            <h4>Outcome</h4>
+            <p>Delivered a working tutoring tool in a team setting and strengthened my React, API integration and accessibility skills.</p>
+
+            <div class="case__links">
+              <a href="https://github.com/Redback-Operations" target="_blank" rel="noopener">View code</a>
+              <a href="./assets/BugBox-Presentation.pdf" target="_blank" rel="noopener">View presentation &#8594;</a>
             </div>
           </div>
         </article>
@@ -304,15 +359,50 @@
         <!-- Project: Smart Home Lighting (IoT) -->
         <article class="project reveal">
           <div class="project__media">
-            <img src="./assets/smart-home-lighting.jpg" alt="Smart Home Lighting System" loading="lazy" />
+            <picture>
+              <source srcset="./assets/smart-home-lighting.webp" type="image/webp" />
+              <img src="./assets/smart-home-lighting.jpg" alt="Smart Home Lighting System" loading="lazy" width="760" height="760" />
+            </picture>
           </div>
           <div class="project__body">
             <h3 class="project__title">Smart Home Lighting (IoT)</h3>
             <p class="project__desc">Scalable multi-node lighting network with auto/manual modes, ambient sensing and a real-time dashboard.</p>
             <div class="project__tags"><span>Arduino</span><span>MQTT</span><span>Node-RED</span><span>AWS</span></div>
             <div class="project__links">
+              <button class="project__more" type="button">Case study</button>
               <a href="https://github.com/Dmatt547/Smart-Home-Lighting-IoT-.git" target="_blank" rel="noopener">Code</a>
               <a href="https://youtu.be/etTVIA0uA3g" target="_blank" rel="noopener">Demo &#8594;</a>
+            </div>
+          </div>
+
+          <!-- Hidden case study. main.js copies this into the modal on click. -->
+          <div class="project__details" hidden>
+            <span class="case__kicker">Case study</span>
+            <h3 class="case__title">Smart Home Lighting (IoT)</h3>
+            <p class="case__meta">Arduino Nano 33 IoT &middot; MQTT &middot; Node-RED &middot; AWS</p>
+            <div class="case__tags"><span>Arduino</span><span>MQTT</span><span>Node-RED</span><span>AWS</span><span>IoT</span></div>
+
+            <h4>Overview</h4>
+            <p>A scalable smart lighting system where several lighting nodes are controlled in real time from a central dashboard. It supports automatic and manual modes and senses ambient light to adjust brightness.</p>
+
+            <h4>My role</h4>
+            <p>I designed and built the full system end to end: the embedded firmware, the messaging layer and the dashboard.</p>
+
+            <h4>What I built</h4>
+            <ul>
+              <li>Arduino Nano 33 IoT nodes that publish and subscribe over MQTT (PubSubClient)</li>
+              <li>Node-RED dashboard for brightness and colour control</li>
+              <li>Automatic mode driven by an ambient light sensor, with a manual override</li>
+              <li>AWS EC2 hosting the MQTT broker so more nodes can be added</li>
+              <li>Event-driven architecture for fast, real-time response</li>
+            </ul>
+
+            <h4>Outcome</h4>
+            <p>Learned event-driven design, real-time messaging and how to connect embedded devices to the cloud.</p>
+
+            <div class="case__links">
+              <a href="https://github.com/Dmatt547/Smart-Home-Lighting-IoT-.git" target="_blank" rel="noopener">View code</a>
+              <a href="https://youtu.be/etTVIA0uA3g" target="_blank" rel="noopener">Watch demo &#8594;</a>
             </div>
           </div>
         </article>
@@ -320,15 +410,49 @@
         <!-- Project: Robot Simulator API -->
         <article class="project reveal">
           <div class="project__media">
-            <img src="./assets/robot-api.jpg" alt="Robot Simulator Web API" loading="lazy" />
+            <picture>
+              <source srcset="./assets/robot-api.webp" type="image/webp" />
+              <img src="./assets/robot-api.jpg" alt="Robot Simulator Web API" loading="lazy" width="760" height="760" />
+            </picture>
           </div>
           <div class="project__body">
             <h3 class="project__title">Robot Simulator API</h3>
             <p class="project__desc">REST API with authentication, maps and robot commands built on an N-tier architecture and tested in Postman.</p>
             <div class="project__tags"><span>ASP.NET Core</span><span>C#</span><span>REST</span></div>
             <div class="project__links">
+              <button class="project__more" type="button">Case study</button>
               <a href="https://github.com/Dmatt547/Robot-Simulator-API.git" target="_blank" rel="noopener">Code</a>
               <a href="https://youtu.be/li689rn6q-Q" target="_blank" rel="noopener">Demo &#8594;</a>
+            </div>
+          </div>
+
+          <!-- Hidden case study. main.js copies this into the modal on click. -->
+          <div class="project__details" hidden>
+            <span class="case__kicker">Case study</span>
+            <h3 class="case__title">Robot Simulator API</h3>
+            <p class="case__meta">ASP.NET Core &middot; C# &middot; REST</p>
+            <div class="case__tags"><span>ASP.NET Core</span><span>C#</span><span>REST</span><span>Postman</span></div>
+
+            <h4>Overview</h4>
+            <p>A REST API that drives a simulated robot, exposing endpoints for maps and robot commands with authentication and authorization built in.</p>
+
+            <h4>My role</h4>
+            <p>I designed and implemented the API using a clean N-tier architecture, then tested every endpoint in Postman.</p>
+
+            <h4>What I built</h4>
+            <ul>
+              <li>REST endpoints for maps and robot movement commands</li>
+              <li>Authentication and authorization to protect the routes</li>
+              <li>N-tier design that separates controllers, services and data</li>
+              <li>A full Postman collection to test the endpoints</li>
+            </ul>
+
+            <h4>Outcome</h4>
+            <p>Deepened my understanding of API design, layered architecture and securing endpoints in C#.</p>
+
+            <div class="case__links">
+              <a href="https://github.com/Dmatt547/Robot-Simulator-API.git" target="_blank" rel="noopener">View code</a>
+              <a href="https://youtu.be/li689rn6q-Q" target="_blank" rel="noopener">Watch demo &#8594;</a>
             </div>
           </div>
         </article>
@@ -336,15 +460,49 @@
         <!-- Project: Farmyard Racing -->
         <article class="project reveal">
           <div class="project__media">
-            <img src="./assets/farm-yard-racing.png" alt="Farmyard Racing Game" loading="lazy" />
+            <picture>
+              <source srcset="./assets/farm-yard-racing.webp" type="image/webp" />
+              <img src="./assets/farm-yard-racing.png" alt="Farmyard Racing Game" loading="lazy" width="800" height="739" />
+            </picture>
           </div>
           <div class="project__body">
             <h3 class="project__title">Farmyard Racing</h3>
             <p class="project__desc">Team Agile project: a racing game with a lap system, power-ups and racing mechanics, with CI on GitHub.</p>
             <div class="project__tags"><span>Unity</span><span>C#</span><span>Agile</span></div>
             <div class="project__links">
+              <button class="project__more" type="button">Case study</button>
               <a href="https://github.com/Dmatt547/Farmyard-Racing.git" target="_blank" rel="noopener">Code</a>
               <a href="https://youtu.be/kkUTy7rGh44" target="_blank" rel="noopener">Demo &#8594;</a>
+            </div>
+          </div>
+
+          <!-- Hidden case study. main.js copies this into the modal on click. -->
+          <div class="project__details" hidden>
+            <span class="case__kicker">Case study</span>
+            <h3 class="case__title">Farmyard Racing</h3>
+            <p class="case__meta">Unity &middot; C# &middot; Team Agile project</p>
+            <div class="case__tags"><span>Unity</span><span>C#</span><span>Agile</span></div>
+
+            <h4>Overview</h4>
+            <p>A farm-themed racing game built by a team using Agile. Players race around a track with a lap system and power-ups.</p>
+
+            <h4>My role</h4>
+            <p>I helped coordinate the Agile process and contributed to gameplay development.</p>
+
+            <h4>What I built</h4>
+            <ul>
+              <li>Lap system that tracks each player's progress around the track</li>
+              <li>Power-ups that change the flow of the race</li>
+              <li>Core racing mechanics and supporting UI</li>
+              <li>Continuous integration set up on GitHub</li>
+            </ul>
+
+            <h4>Outcome</h4>
+            <p>Practised Agile teamwork, version control and game development in Unity.</p>
+
+            <div class="case__links">
+              <a href="https://github.com/Dmatt547/Farmyard-Racing.git" target="_blank" rel="noopener">View code</a>
+              <a href="https://youtu.be/kkUTy7rGh44" target="_blank" rel="noopener">Watch demo &#8594;</a>
             </div>
           </div>
         </article>
@@ -352,15 +510,49 @@
         <!-- Project: Automatic Dog Feeder -->
         <article class="project reveal">
           <div class="project__media">
-            <img src="./assets/dog-feeder.png" alt="Automatic Dog Feeder" loading="lazy" />
+            <picture>
+              <source srcset="./assets/dog-feeder.webp" type="image/webp" />
+              <img src="./assets/dog-feeder.png" alt="Automatic Dog Feeder" loading="lazy" width="508" height="560" />
+            </picture>
           </div>
           <div class="project__body">
             <h3 class="project__title">Automatic Dog Feeder</h3>
             <p class="project__desc">Dispenses food to a target weight using a load cell and servo, with a Raspberry Pi GUI and telemetry.</p>
             <div class="project__tags"><span>Arduino</span><span>Load Cell</span><span>Raspberry Pi</span></div>
             <div class="project__links">
+              <button class="project__more" type="button">Case study</button>
               <a href="https://github.com/Dmatt547/Automatic-Dog-Feeder-Final.git" target="_blank" rel="noopener">Code</a>
               <a href="https://youtu.be/B0yXcGgZ2DM" target="_blank" rel="noopener">Demo &#8594;</a>
+            </div>
+          </div>
+
+          <!-- Hidden case study. main.js copies this into the modal on click. -->
+          <div class="project__details" hidden>
+            <span class="case__kicker">Case study</span>
+            <h3 class="case__title">Automatic Dog Feeder</h3>
+            <p class="case__meta">Arduino &middot; Load Cell &middot; Servo &middot; Raspberry Pi</p>
+            <div class="case__tags"><span>Arduino</span><span>Load Cell</span><span>Raspberry Pi</span><span>IoT</span></div>
+
+            <h4>Overview</h4>
+            <p>An automatic feeder that dispenses food until a target weight is reached, with a simple Raspberry Pi interface and feed telemetry.</p>
+
+            <h4>My role</h4>
+            <p>I built the hardware control and the interface that sets targets and monitors each feed.</p>
+
+            <h4>What I built</h4>
+            <ul>
+              <li>Load cell that weighs the food in real time</li>
+              <li>Servo-driven dispenser that stops at the target weight</li>
+              <li>Raspberry Pi GUI to set targets and watch progress</li>
+              <li>Telemetry to record each feed</li>
+            </ul>
+
+            <h4>Outcome</h4>
+            <p>Combined sensors, actuators and a GUI into one reliable embedded system.</p>
+
+            <div class="case__links">
+              <a href="https://github.com/Dmatt547/Automatic-Dog-Feeder-Final.git" target="_blank" rel="noopener">View code</a>
+              <a href="https://youtu.be/B0yXcGgZ2DM" target="_blank" rel="noopener">Watch demo &#8594;</a>
             </div>
           </div>
         </article>
@@ -368,14 +560,49 @@
         <!-- Project: Parallel Programming Study -->
         <article class="project reveal">
           <div class="project__media">
-            <img src="./assets/parallel-programming.jpg" alt="Parallel Programming Study" loading="lazy" />
+            <picture>
+              <source srcset="./assets/parallel-programming.webp" type="image/webp" />
+              <img src="./assets/parallel-programming.jpg" alt="Parallel Programming Study" loading="lazy" width="760" height="760" />
+            </picture>
           </div>
           <div class="project__body">
             <h3 class="project__title">Parallel Programming Study</h3>
             <p class="project__desc">Performance comparison and benchmarks across std::thread, OpenMP and MPI for compute-heavy workloads.</p>
             <div class="project__tags"><span>C++</span><span>OpenMP</span><span>MPI</span></div>
             <div class="project__links">
+              <button class="project__more" type="button">Case study</button>
               <a href="https://github.com/Dmatt547/Parallel-Programming---MPI-vs-OMP-vs-opencl.git" target="_blank" rel="noopener">Code</a>
+              <a href="https://youtu.be/I7CJsaXDyTA" target="_blank" rel="noopener">Demo &#8594;</a>
+            </div>
+          </div>
+
+          <!-- Hidden case study. main.js copies this into the modal on click. -->
+          <div class="project__details" hidden>
+            <span class="case__kicker">Case study</span>
+            <h3 class="case__title">Parallel Programming Study</h3>
+            <p class="case__meta">C++ &middot; std::thread &middot; OpenMP &middot; MPI</p>
+            <div class="case__tags"><span>C++</span><span>OpenMP</span><span>MPI</span><span>Benchmarking</span></div>
+
+            <h4>Overview</h4>
+            <p>A study comparing three ways to parallelise compute-heavy work in C++, measuring how each approach scales as the workload grows.</p>
+
+            <h4>My role</h4>
+            <p>I implemented the same workload three different ways and benchmarked them against each other.</p>
+
+            <h4>What I built</h4>
+            <ul>
+              <li>Multithreaded version using std::thread</li>
+              <li>Shared-memory version using OpenMP</li>
+              <li>Distributed version using MPI</li>
+              <li>Benchmarks comparing speed and scaling across the three</li>
+            </ul>
+
+            <h4>Outcome</h4>
+            <p>Learned the trade-offs between threading models and how to measure real performance gains.</p>
+
+            <div class="case__links">
+              <a href="https://github.com/Dmatt547/Parallel-Programming---MPI-vs-OMP-vs-opencl.git" target="_blank" rel="noopener">View code</a>
+              <a href="https://youtu.be/I7CJsaXDyTA" target="_blank" rel="noopener">Watch demo &#8594;</a>
             </div>
           </div>
         </article>
@@ -383,7 +610,66 @@
     </section>
 
     <!-- ============================================================
-         7. CONTACT
+         7. THESIS
+         Honours research highlight: overview, focus areas and status.
+         ============================================================ -->
+    <section id="thesis" class="section section--alt">
+      <div class="section__head reveal">
+        <span class="section__kicker">Thesis</span>
+        <h2 class="section__title">Honours research</h2>
+      </div>
+
+      <div class="thesis reveal">
+        <div class="thesis__intro">
+          <span class="thesis__badge">Final-year Honours &middot; Deakin University &middot; 2026</span>
+          <h3 class="thesis__title">Monitoring the Health &amp; Reliability of Remote Autonomous Systems</h3>
+          <p class="thesis__lead">
+            My Honours research looks at how to keep remote autonomous systems, such as drones
+            and robots, running reliably by watching their health in real time and catching
+            faults before they cause downtime.
+          </p>
+        </div>
+
+        <!-- Three core focus areas -->
+        <div class="thesis__areas">
+          <div class="thesis__area">
+            <h4>System monitoring</h4>
+            <p>Collecting and tracking live health metrics from remote systems as they operate.</p>
+          </div>
+          <div class="thesis__area">
+            <h4>Fault detection</h4>
+            <p>Spotting failures and anomalies early, before they turn into bigger problems.</p>
+          </div>
+          <div class="thesis__area">
+            <h4>Telemetry analysis</h4>
+            <p>Making sense of streamed sensor and status data to understand system behaviour.</p>
+          </div>
+        </div>
+
+        <!-- Tools and current status -->
+        <div class="thesis__meta">
+          <div>
+            <span class="thesis__meta-label">Approach &amp; tools</span>
+            <p>Prometheus for metrics collection (planned), with a possible experiment using DJI Tello drones to gather real telemetry.</p>
+          </div>
+          <div>
+            <span class="thesis__meta-label">Status</span>
+            <p>In progress &middot; developing the monitoring approach and experiment design.</p>
+          </div>
+        </div>
+
+        <!-- Opens the full thesis PDF in a new tab -->
+        <div class="thesis__cta">
+          <a class="btn btn--primary" href="./assets/Daniel_Mattioli_STI723_Thesis_T1_2026.pdf" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z" stroke-linejoin="round"/><path d="M14 3v5h5M9 13h6M9 17h6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            View Thesis (PDF)
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         8. CONTACT
          No backend. The button opens the visitor's email app via a
          mailto link. Social links open in new tabs.
          ============================================================ -->
@@ -402,7 +688,7 @@
           danielmattioli2005@gmail.com
         </a>
 
-        <!-- Secondary contact / profile links -->
+        <!-- Secondary contact / profile links --> 
         <div class="contact__socials">
           <a href="https://github.com/Dmatt547" target="_blank" rel="noopener" class="contact__social">
             <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 .5C5.7.5.5 5.7.5 12c0 5.1 3.3 9.4 7.9 10.9.6.1.8-.2.8-.6v-2c-3.2.7-3.9-1.5-3.9-1.5-.5-1.4-1.3-1.7-1.3-1.7-1.1-.7.1-.7.1-.7 1.2.1 1.8 1.2 1.8 1.2 1 1.8 2.7 1.3 3.4 1 .1-.8.4-1.3.8-1.6-2.6-.3-5.3-1.3-5.3-5.8 0-1.3.5-2.3 1.2-3.2-.1-.3-.5-1.5.1-3.1 0 0 1-.3 3.3 1.2a11.5 11.5 0 0 1 6 0C17 5 18 5.3 18 5.3c.7 1.6.2 2.8.1 3.1.8.9 1.2 1.9 1.2 3.2 0 4.6-2.7 5.5-5.3 5.8.4.4.8 1.1.8 2.2v3.3c0 .3.2.7.8.6A11.5 11.5 0 0 0 23.5 12C23.5 5.7 18.3.5 12 .5z"/></svg>
@@ -421,7 +707,21 @@
     </section>
 
     <!-- ============================================================
-         8. FOOTER
+         CASE STUDY MODAL
+         A single reusable popup. When a project is clicked, main.js
+         copies that project's hidden .project__details into here and
+         opens it. Closes on the X, the backdrop, or the Escape key.
+         ============================================================ -->
+    <div class="modal" id="caseModal" aria-hidden="true">
+      <div class="modal__backdrop" data-close></div>
+      <div class="modal__dialog" role="dialog" aria-modal="true" aria-label="Project case study">
+        <button class="modal__close" type="button" aria-label="Close case study" data-close>&times;</button>
+        <div class="modal__content" id="caseModalContent"><!-- filled by main.js --></div>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         9. FOOTER
          The year is filled in automatically by main.js.
          ============================================================ -->
     <footer class="footer">

@@ -7,6 +7,9 @@
      3. Mobile menu       - open/close the slide-in menu
      4. Scroll reveal     - fade sections in as they enter view
      5. Active nav link   - highlight the section you are viewing
+     6. Scroll effects    - progress bar + parallax background glows
+     7. Count-up stats    - animate the About numbers when seen
+     8. Case study modal  - open a project's case study in a popup
    ============================================================ */
 
 /* ------------------------------------------------------------
@@ -108,3 +111,130 @@ const sectionObserver = new IntersectionObserver(
 );
 
 sections.forEach((section) => sectionObserver.observe(section));
+
+
+/* ------------------------------------------------------------
+   6. Scroll effects
+   - Fills the top progress bar based on how far down the page
+     the visitor has scrolled.
+   - Moves the two background glows at different speeds, which
+     creates a subtle parallax (depth) effect.
+   Parallax is skipped when the user prefers reduced motion.
+   ------------------------------------------------------------ */
+const progressBar = document.getElementById("scrollProgress");
+const glow1 = document.querySelector(".bg-glow--1");
+const glow2 = document.querySelector(".bg-glow--2");
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function updateScrollEffects() {
+  const scrollTop = window.scrollY;
+
+  // Progress bar: current scroll as a percentage of the scrollable height
+  const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+  const percent = scrollable > 0 ? (scrollTop / scrollable) * 100 : 0;
+  progressBar.style.width = percent + "%";
+
+  // Parallax: shift each glow by a fraction of the scroll distance
+  if (!prefersReducedMotion) {
+    if (glow1) glow1.style.transform = `translateY(${scrollTop * 0.18}px)`;
+    if (glow2) glow2.style.transform = `translateY(${scrollTop * -0.12}px)`;
+  }
+}
+
+updateScrollEffects(); // set the starting position on load
+window.addEventListener("scroll", updateScrollEffects, { passive: true });
+
+
+/* ------------------------------------------------------------
+   7. Count-up stats
+   The numbers in the About section count up from 0 to their
+   target value the first time they scroll into view.
+   ------------------------------------------------------------ */
+const statNumbers = document.querySelectorAll(".stat__num[data-count]");
+
+const countObserver = new IntersectionObserver(
+  (entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      animateCount(entry.target);
+      countObserver.unobserve(entry.target); // animate each number only once
+    });
+  },
+  { threshold: 0.6 }
+);
+
+statNumbers.forEach((number) => countObserver.observe(number));
+
+// Counts one element up from 0 to its data-count value
+function animateCount(element) {
+  const target = parseInt(element.dataset.count, 10);
+  const suffix = element.dataset.suffix || ""; // e.g. the "+" in "8+"
+
+  // If the user prefers less motion, just show the final number
+  if (prefersReducedMotion) {
+    element.textContent = target + suffix;
+    return;
+  }
+
+  const duration = 1200; // total animation time in milliseconds
+  const startTime = performance.now();
+
+  function step(now) {
+    const progress = Math.min((now - startTime) / duration, 1);
+    const eased = 1 - Math.pow(1 - progress, 3); // ease-out: fast, then slows
+    element.textContent = Math.round(target * eased) + suffix;
+    if (progress < 1) requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+
+/* ------------------------------------------------------------
+   8. Case study modal
+   Clicking a project card copies that project's hidden
+   .project__details into the modal and opens it. Clicks on the
+   Code / Demo links are ignored so those still work normally.
+   The modal closes on the X, the backdrop, or the Escape key.
+   ------------------------------------------------------------ */
+const projectCards = document.querySelectorAll(".project");
+const modal = document.getElementById("caseModal");
+const modalContent = document.getElementById("caseModalContent");
+
+// Copy a project's case study into the modal and show it
+function openCaseStudy(project) {
+  const details = project.querySelector(".project__details");
+  if (!details) return;
+
+  modalContent.innerHTML = details.innerHTML;
+  modal.classList.add("open");
+  modal.setAttribute("aria-hidden", "false");
+  document.body.classList.add("no-scroll");
+  modal.querySelector(".modal__close").focus(); // move focus into the popup
+}
+
+// Hide the modal and clear its contents
+function closeCaseStudy() {
+  modal.classList.remove("open");
+  modal.setAttribute("aria-hidden", "true");
+  document.body.classList.remove("no-scroll");
+  modalContent.innerHTML = "";
+}
+
+// Open when a card is clicked (but let real links do their own thing)
+projectCards.forEach((project) => {
+  project.addEventListener("click", (event) => {
+    if (event.target.closest("a")) return; // a Code / Demo link was clicked
+    openCaseStudy(project);
+  });
+});
+
+// Close when the X or the backdrop (anything with data-close) is clicked
+modal.addEventListener("click", (event) => {
+  if (event.target.hasAttribute("data-close")) closeCaseStudy();
+});
+
+// Close when Escape is pressed
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && modal.classList.contains("open")) closeCaseStudy();
+});
