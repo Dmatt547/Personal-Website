@@ -322,6 +322,58 @@
       </div>
 
       <div class="projects">
+        <!-- Project: Bullion Tracker -->
+        <article class="project reveal">
+          <div class="project__media">
+            <img src="./assets/bullion-tracker.svg" alt="Bullion Tracker dashboard" loading="lazy" width="760" height="760" />
+          </div>
+          <div class="project__body">
+            <h3 class="project__title">Bullion Tracker</h3>
+            <p class="project__desc">Live gold &amp; silver portfolio tracker (AUD) with Google sign-in, real-time cross-device sync, live spot prices and charts. Built and deployed solo.</p>
+            <div class="project__tags"><span>JavaScript</span><span>Firebase</span><span>Chart.js</span></div>
+            <div class="project__links">
+              <button class="project__more" type="button">Case study</button>
+              <a href="https://github.com/Dmatt547/bullion-tracker" target="_blank" rel="noopener">Code</a>
+              <a href="https://dm-bullion-tracker.netlify.app" target="_blank" rel="noopener">Live demo &#8594;</a>
+            </div>
+          </div>
+
+          <!-- Hidden case study. main.js copies this into the modal on click. -->
+          <div class="project__details" hidden>
+            <span class="case__kicker">Case study</span>
+            <h3 class="case__title">Bullion Tracker</h3>
+            <p class="case__meta">Vanilla JS (ES modules) &middot; Firebase &middot; Chart.js &middot; Netlify</p>
+            <div class="case__tags"><span>JavaScript</span><span>Firebase</span><span>Chart.js</span><span>Netlify</span></div>
+
+            <h4>Overview</h4>
+            <p>A web app for tracking a gold and silver bullion portfolio in AUD. It pulls live spot prices, works out cost basis and unrealised profit/loss, and keeps your holdings synced across every device you sign in on. Built with plain JavaScript ES modules: no framework and no build step.</p>
+
+            <h4>My role</h4>
+            <p>I designed and built the whole thing end to end on my own: the front-end, the data and auth layer, the live price integration and the deployment pipeline.</p>
+
+            <h4>What I built</h4>
+            <ul>
+              <li>Live spot prices from a metals API, converted USD&rarr;AUD with a live FX rate and auto-refreshed every 5 minutes</li>
+              <li>Google sign-in with real-time cross-device sync via Firebase Auth + Firestore, falling back to local storage when signed out or offline</li>
+              <li>Cost-basis and break-even maths with blended average $/oz and profit/loss per metal</li>
+              <li>Charts for allocation, cost vs current value, and portfolio value over time (Chart.js)</li>
+              <li>CSV import/export, inline editing, and oz/gram weight entry stored canonically in troy ounces</li>
+              <li>Continuous deployment to Netlify with CI on GitHub Actions</li>
+            </ul>
+
+            <h4>Outcome</h4>
+            <p>Shipped a live, production app I use myself, and got hands-on with authentication, real-time databases, third-party API integration and CI/CD, all without reaching for a framework.</p>
+
+            <h4>License &amp; disclaimer</h4>
+            <p>Open source under the MIT License, free for anyone to use, modify and build on, with attribution. Provided "as is", with no warranty; used at your own risk and cost. It's a personal tracking tool, not financial advice.</p>
+
+            <div class="case__links">
+              <a href="https://github.com/Dmatt547/bullion-tracker" target="_blank" rel="noopener">View code</a>
+              <a href="https://dm-bullion-tracker.netlify.app" target="_blank" rel="noopener">Open live demo &#8594;</a>
+            </div>
+          </div>
+        </article>
+
         <!-- Project: BugBox AI Tutor Bot -->
         <article class="project reveal">
           <div class="project__media">
