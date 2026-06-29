@@ -12,7 +12,7 @@
 }
 
 /* -------------------------
-   1200px — Switch to hamburger nav
+   1200px - Switch to hamburger nav
    ------------------------- */
 @media screen and (max-width: 1200px) {
   #desktop-nav {
@@ -87,7 +87,7 @@
 }
 
 /* -------------------------
-   1101px+ — Projects: 3 columns
+   1101px+ - Projects: 3 columns
    ------------------------- */
 @media screen and (min-width: 1101px) {
   #projects .about-containers {
@@ -122,7 +122,7 @@
 }
 
 /* -------------------------
-   1100px–951px — Projects: 2 columns
+   1100px-951px - Projects: 2 columns
    ------------------------- */
 @media screen and (max-width: 1100px) and (min-width: 951px) {
   #projects .about-containers {
@@ -139,7 +139,7 @@
 }
 
 /* -------------------------
-   950px–769px — Projects: 2 columns (narrower)
+   950px-769px - Projects: 2 columns (narrower)
    ------------------------- */
 @media screen and (max-width: 950px) and (min-width: 769px) {
   #projects .about-containers {
@@ -236,7 +236,7 @@
 }
 
 /* -------------------------
-   768px–601px — Projects: 2 columns
+   768px-601px - Projects: 2 columns
    ------------------------- */
 @media screen and (max-width: 768px) and (min-width: 601px) {
   #projects {
@@ -270,7 +270,7 @@
 }
 
 /* -------------------------
-   640px — Contact padding
+   640px - Contact padding
    ------------------------- */
 @media (max-width: 640px) {
   #contact .experience-details-container {
@@ -461,7 +461,7 @@
 }
 
 /* -------------------------
-   600px–401px — Projects: 1 column
+   600px-401px - Projects: 1 column
    ------------------------- */
 @media screen and (max-width: 600px) and (min-width: 401px) {
   #projects .experience-details-container {
@@ -551,7 +551,7 @@
 }
 
 /* -------------------------
-   Touch devices — Project cards tap behaviour
+   Touch devices - Project cards tap behaviour
    ------------------------- */
 @media (hover: none) {
   #projects .project-overlay {

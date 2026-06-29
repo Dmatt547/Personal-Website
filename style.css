@@ -368,7 +368,7 @@ section {
   animation: underline-slide-in 0.6s ease-out 0.2s backwards;
 }
 
-/* Removed teal glow — simple fade in to match blue colour scheme */
+/* Removed teal glow - simple fade in to match blue colour scheme */
 @keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }

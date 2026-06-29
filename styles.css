@@ -470,6 +470,27 @@ img { display: block; max-width: 100%; }
 .info-card__meta { font-size: 0.88rem; color: var(--accent); margin-bottom: 0.6rem; }
 .info-card p:last-child { color: var(--text-soft); font-size: 0.94rem; }
 
+/* Timeline: a vertical list of roles inside one card. Scales as roles are added. */
+.timeline { list-style: none; margin: 0.4rem 0 0; padding: 0; }
+.timeline__item {
+  position: relative;
+  padding: 0 0 1.25rem 1.4rem;
+  border-left: 2px solid var(--border);
+}
+.timeline__item:last-child { padding-bottom: 0; border-left-color: transparent; }
+.timeline__item::before {
+  content: "";
+  position: absolute;
+  left: -6px; top: 4px;
+  width: 10px; height: 10px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 4px var(--grad-soft);
+}
+.timeline__role { font-weight: 600; color: var(--text); }
+.timeline__meta { font-size: 0.88rem; color: var(--accent); margin-bottom: 0.4rem; }
+.timeline__desc { color: var(--text-soft); font-size: 0.94rem; }
+
 
 /* ============================================================
    9. SKILLS
