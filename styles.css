@@ -921,7 +921,7 @@ body.no-scroll { overflow: hidden; }
 
 /* Tools + status row */
 .thesis__meta {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
   border-top: 1px solid var(--border); padding-top: 1.5rem;
 }
 .thesis__meta-label {
@@ -931,7 +931,7 @@ body.no-scroll { overflow: hidden; }
 .thesis__meta p { color: var(--text-soft); font-size: 0.92rem; }
 
 /* "View Thesis" button row */
-.thesis__cta { margin-top: 1.6rem; }
+.thesis__cta { margin-top: 1.6rem; display: flex; flex-wrap: wrap; gap: 0.8rem; }
 
 /* Thesis stacks into one column on small screens */
 @media (max-width: 760px) {
