@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 760 760" width="760" height="760" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif">
+  <!-- App background -->
+  <rect width="760" height="760" fill="#f6f7f9"/>
+
+  <!-- Header -->
+  <g transform="translate(40,40)">
+    <text x="0" y="27" font-size="28">📋</text>
+    <text x="44" y="28" font-size="26" font-weight="700" fill="#1a1d21">Job Tracker</text>
+    <circle cx="556" cy="20" r="5" fill="#1a7f4b"/>
+    <text x="568" y="25" font-size="13" fill="#6b7280">Synced</text>
+    <rect x="628" y="6" width="52" height="28" rx="8" fill="#1a1d21"/>
+    <text x="654" y="25" font-size="12" font-weight="600" fill="#ffffff" text-anchor="middle">Add</text>
+  </g>
+  <text x="40" y="98" font-size="13" fill="#6b7280">Graduate role pipeline · 106 roles tracked · Melbourne</text>
+
+  <!-- Tabs -->
+  <g transform="translate(40,116)">
+    <rect x="0" y="0" width="680" height="40" rx="12" fill="#ffffff" stroke="#e7e9ee"/>
+    <rect x="8" y="7" width="74" height="26" rx="8" fill="#1a1d21"/>
+    <text x="45" y="24" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Today</text>
+    <text x="104" y="24" font-size="12" font-weight="600" fill="#6b7280">Board</text>
+    <text x="164" y="24" font-size="12" font-weight="600" fill="#6b7280">All roles</text>
+    <text x="238" y="24" font-size="12" font-weight="600" fill="#6b7280">Stats</text>
+    <text x="664" y="24" font-size="11" fill="#6b7280" text-anchor="end">Realtime · just now</text>
+  </g>
+
+  <!-- Summary cards -->
+  <g transform="translate(40,172)">
+    <rect x="0" y="0" width="220" height="92" rx="12" fill="#ffffff" stroke="#e7e9ee"/>
+    <text x="16" y="26" font-size="12" font-weight="600" fill="#6b7280">NEEDS YOU NOW</text>
+    <text x="16" y="58" font-size="26" font-weight="700" fill="#1a1d21">7</text>
+    <rect x="16" y="68" width="92" height="18" rx="9" fill="#fdeceb"/>
+    <text x="62" y="81" font-size="11" font-weight="700" fill="#b3261e" text-anchor="middle">3 overdue</text>
+
+    <rect x="230" y="0" width="220" height="92" rx="12" fill="#ffffff" stroke="#e7e9ee"/>
+    <text x="246" y="26" font-size="12" font-weight="600" fill="#6b7280">APPLIED</text>
+    <text x="246" y="58" font-size="26" font-weight="700" fill="#1a1d21">62</text>
+    <rect x="246" y="68" width="106" height="18" rx="9" fill="#e7f5ed"/>
+    <text x="299" y="81" font-size="11" font-weight="700" fill="#1a7f4b" text-anchor="middle">+9 this week</text>
+
+    <rect x="460" y="0" width="220" height="92" rx="12" fill="#ffffff" stroke="#e7e9ee"/>
+    <text x="476" y="26" font-size="12" font-weight="600" fill="#6b7280">INTERVIEWS</text>
+    <text x="476" y="58" font-size="26" font-weight="700" fill="#1a1d21">4</text>
+    <text x="476" y="81" font-size="12" fill="#6b7280">2 scheduled this week</text>
+  </g>
+
+  <!-- Action queue -->
+  <g transform="translate(40,284)">
+    <rect x="0" y="0" width="680" height="228" rx="12" fill="#ffffff" stroke="#e7e9ee"/>
+    <text x="16" y="27" font-size="13" font-weight="700" fill="#1a1d21">Action queue</text>
+    <text x="664" y="27" font-size="11" fill="#6b7280" text-anchor="end">ranked by urgency</text>
+
+    <!-- row 1 -->
+    <text x="16" y="66" font-size="13" font-weight="600" fill="#1a1d21">Atlassian</text>
+    <text x="16" y="82" font-size="11" fill="#6b7280">Graduate Software Engineer 2027 · Seek</text>
+    <rect x="330" y="56" width="112" height="20" rx="10" fill="#f1f3f5"/>
+    <text x="386" y="70" font-size="11" font-weight="700" fill="#6b7280" text-anchor="middle">◆ Not applied</text>
+    <rect x="520" y="56" width="144" height="20" rx="10" fill="#fdf3e3"/>
+    <text x="592" y="70" font-size="11" font-weight="700" fill="#9a6700" text-anchor="middle">▲ Closes in 2 days</text>
+
+    <!-- row 2 -->
+    <rect x="16" y="97" width="648" height="1" fill="#f0f1f4"/>
+    <text x="16" y="121" font-size="13" font-weight="600" fill="#1a1d21">Canva</text>
+    <text x="16" y="137" font-size="11" fill="#6b7280">Software Engineer, New Grad · Referral</text>
+    <rect x="330" y="111" width="112" height="20" rx="10" fill="#e8eef9"/>
+    <text x="386" y="125" font-size="11" font-weight="700" fill="#2b5fa8" text-anchor="middle">● Applied</text>
+    <rect x="520" y="111" width="144" height="20" rx="10" fill="#fdeceb"/>
+    <text x="592" y="125" font-size="11" font-weight="700" fill="#b3261e" text-anchor="middle">■ Follow-up overdue</text>
+
+    <!-- row 3 -->
+    <rect x="16" y="152" width="648" height="1" fill="#f0f1f4"/>
+    <text x="16" y="176" font-size="13" font-weight="600" fill="#1a1d21">REA Group</text>
+    <text x="16" y="192" font-size="11" fill="#6b7280">Graduate Developer · Grad program</text>
+    <rect x="330" y="166" width="112" height="20" rx="10" fill="#efe7f9"/>
+    <text x="386" y="180" font-size="11" font-weight="700" fill="#6b3fa0" text-anchor="middle">★ Interview</text>
+    <rect x="520" y="166" width="144" height="20" rx="10" fill="#e7f5ed"/>
+    <text x="592" y="180" font-size="11" font-weight="700" fill="#1a7f4b" text-anchor="middle">Thursday, 2:00 pm</text>
+  </g>
+
+  <!-- Board preview -->
+  <g transform="translate(40,530)">
+    <rect x="0" y="0" width="330" height="190" rx="12" fill="#ffffff" stroke="#e7e9ee"/>
+    <text x="16" y="26" font-size="13" font-weight="700" fill="#1a1d21">Board</text>
+    <text x="314" y="26" font-size="11" fill="#6b7280" text-anchor="end">drag to change status</text>
+
+    <g transform="translate(16,40)">
+      <rect x="0" y="0" width="94" height="136" rx="10" fill="#f6f7f9"/>
+      <text x="10" y="20" font-size="10" font-weight="700" fill="#6b7280">APPLIED · 62</text>
+      <rect x="8" y="28" width="78" height="26" rx="6" fill="#ffffff" stroke="#e7e9ee"/>
+      <rect x="14" y="38" width="46" height="6" rx="3" fill="#c9ced6"/>
+      <rect x="8" y="60" width="78" height="26" rx="6" fill="#ffffff" stroke="#e7e9ee"/>
+      <rect x="14" y="70" width="56" height="6" rx="3" fill="#c9ced6"/>
+      <rect x="8" y="92" width="78" height="26" rx="6" fill="#ffffff" stroke="#e7e9ee"/>
+      <rect x="14" y="102" width="38" height="6" rx="3" fill="#c9ced6"/>
+
+      <rect x="104" y="0" width="94" height="136" rx="10" fill="#f6f7f9"/>
+      <text x="114" y="20" font-size="9" font-weight="700" fill="#6b7280">HEARD BACK · 18</text>
+      <rect x="112" y="28" width="78" height="26" rx="6" fill="#ffffff" stroke="#e7e9ee"/>
+      <rect x="118" y="38" width="50" height="6" rx="3" fill="#c9ced6"/>
+      <rect x="112" y="60" width="78" height="26" rx="6" fill="#ffffff" stroke="#c9a9e6" stroke-dasharray="4 3"/>
+      <rect x="118" y="70" width="42" height="6" rx="3" fill="#c9a9e6"/>
+
+      <rect x="208" y="0" width="94" height="136" rx="10" fill="#f6f7f9"/>
+      <text x="218" y="20" font-size="10" font-weight="700" fill="#6b7280">INTERVIEW · 4</text>
+      <rect x="216" y="28" width="78" height="26" rx="6" fill="#ffffff" stroke="#e7e9ee"/>
+      <rect x="222" y="38" width="48" height="6" rx="3" fill="#c9ced6"/>
+    </g>
+  </g>
+
+  <!-- Funnel -->
+  <g transform="translate(380,530)">
+    <rect x="0" y="0" width="340" height="190" rx="12" fill="#ffffff" stroke="#e7e9ee"/>
+    <text x="16" y="26" font-size="13" font-weight="700" fill="#1a1d21">Conversion funnel</text>
+
+    <g transform="translate(16,42)">
+      <text x="0" y="12" font-size="11" fill="#6b7280">Applied</text>
+      <rect x="86" y="2" width="180" height="14" rx="7" fill="#2b5fa8"/>
+      <text x="300" y="13" font-size="11" font-weight="700" fill="#1a1d21" text-anchor="end">62</text>
+
+      <text x="0" y="40" font-size="11" fill="#6b7280">Pending</text>
+      <rect x="86" y="30" width="90" height="14" rx="7" fill="#4b7fc4"/>
+      <text x="300" y="41" font-size="11" font-weight="700" fill="#1a1d21" text-anchor="end">31</text>
+
+      <text x="0" y="68" font-size="11" fill="#6b7280">Heard back</text>
+      <rect x="86" y="58" width="52" height="14" rx="7" fill="#7aa0d8"/>
+      <text x="300" y="69" font-size="11" font-weight="700" fill="#1a1d21" text-anchor="end">18</text>
+
+      <text x="0" y="96" font-size="11" fill="#6b7280">Interview</text>
+      <rect x="86" y="86" width="26" height="14" rx="7" fill="#6b3fa0"/>
+      <text x="300" y="97" font-size="11" font-weight="700" fill="#1a1d21" text-anchor="end">4</text>
+
+      <text x="0" y="124" font-size="11" fill="#6b7280">Offer</text>
+      <rect x="86" y="114" width="12" height="14" rx="6" fill="#1a7f4b"/>
+      <text x="300" y="125" font-size="11" font-weight="700" fill="#1a1d21" text-anchor="end">1</text>
+    </g>
+  </g>
+</svg>

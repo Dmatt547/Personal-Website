@@ -383,6 +383,52 @@
           </div>
         </article>
 
+        <!-- Project: Job Tracker -->
+        <article class="project reveal">
+          <div class="project__media">
+            <img src="./assets/job-tracker.svg" alt="Job Tracker action queue and pipeline board" loading="lazy" width="760" height="760" />
+          </div>
+          <div class="project__body">
+            <h3 class="project__title">Job Tracker</h3>
+            <p class="project__desc">A React and Postgres tracker fed by a scheduled AI agent that reads my inbox and the job boards each evening, writes the changes to a seed file, and lets a nightly sync push them into the database.</p>
+            <div class="project__tags"><span>React</span><span>TypeScript</span><span>Supabase</span><span>AI agent</span></div>
+            <div class="project__links">
+              <button class="project__more" type="button">Case study</button>
+              <a href="https://github.com/Dmatt547/Job-Application-Tracker" target="_blank" rel="noopener">Code</a>
+              <a href="https://easyjobtrackerapp.netlify.app" target="_blank" rel="noopener">Live demo &#8594;</a>
+            </div>
+          </div>
+
+          <!-- Hidden case study. main.js copies this into the modal on click. -->
+          <div class="project__details" hidden>
+            <span class="case__kicker">Case study</span>
+            <h3 class="case__title">Job Tracker</h3>
+            <p class="case__meta">React 18 + TypeScript &middot; Supabase (Postgres) &middot; Scheduled AI agent &middot; Node &middot; Netlify</p>
+            <div class="case__tags"><span>React</span><span>TypeScript</span><span>Supabase</span><span>Tailwind</span><span>Automation</span><span>Gmail API</span><span>Netlify</span></div>
+
+            <h4>Overview</h4>
+            <p>A job application tracker in two halves: a React web app backed by Postgres, and a scheduled AI agent that reads my inbox and the job boards every evening, works out what has changed and writes it to a seed file, which a second scheduled job then pushes into the database. It currently holds 106 roles across five pipeline stages. I built it because the spreadsheet I was using could tell me what I had applied for, but not what I needed to do today.</p>
+
+            <h4>My role</h4>
+            <p>Solo project, built end to end: the agent brief, the sync bridge, the database and auth layer, the interface and the deployment.</p>
+
+            <h4>How the pieces fit</h4>
+            <ul>
+              <li><strong>The agent.</strong> A scheduled task fires each evening into a fresh session with no memory of the last one, so all of its context comes from a standing brief in the repo. It classifies replies from the usual applicant tracking systems into pipeline moves, searches Seek, Indeed and GradConnection through a real browser because plain fetches get a 403, and reads every ad before recording it. Its output is an updated seed file rather than a live write, and a push notification tells me what changed.</li>
+              <li><strong>The sync bridge.</strong> The agent runs in a sandbox whose network policy blocks Supabase, so rather than working around that I split the pipeline at the boundary. The agent produces the seed file; a nightly Node script pushes it the last hop, logging to a file, because a scheduled job that fails silently is worse than no job at all.</li>
+              <li><strong>The app.</strong> React 18 and TypeScript in strict mode, built with Vite, styled with Tailwind and deployed on Netlify. It reads from Supabase Postgres and subscribes to realtime changes, so an edit on my phone shows up on my laptop, and it falls back to local storage when no database is configured, which keeps it working offline. The Today view works out the action queue in the browser, and writes are optimistic, so the interface updates straight away and reconciles with the server afterwards. Every push runs the CI pipeline on GitHub Actions: typecheck, then the unit tests, then a production build. If any of the three fails, nothing deploys.</li>
+            </ul>
+
+            <h4>Outcome</h4>
+            <p>I use it every day, and the pipeline keeps itself current instead of me maintaining it by hand. The more useful outcome was what building it forced me to learn: row level security, realtime sync, a storage layer that degrades cleanly to offline, and where the sensible boundary sits between what a scheduled agent should decide and what I should.</p>
+
+            <div class="case__links">
+              <a href="https://github.com/Dmatt547/Job-Application-Tracker" target="_blank" rel="noopener">View code</a>
+              <a href="https://easyjobtrackerapp.netlify.app" target="_blank" rel="noopener">Open live demo &#8594;</a>
+            </div>
+          </div>
+        </article>
+
         <!-- Project: BugBox AI Tutor Bot -->
         <article class="project reveal">
           <div class="project__media">
