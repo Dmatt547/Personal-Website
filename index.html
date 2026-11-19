@@ -858,8 +858,10 @@
 
     <!-- ============================================================
          8. CONTACT
-         No backend. The button opens the visitor's email app via a
-         mailto link. Social links open in new tabs.
+         A Netlify Form: Netlify picks up the data-netlify attribute at
+         deploy time and stores each submission (and emails it to me).
+         main.js sends it in the background so the page doesn't reload.
+         The hidden "bot-field" is a honeypot that catches spam bots.
          ============================================================ -->
     <section id="contact" class="section">
       <div class="contact reveal">
@@ -867,14 +869,45 @@
         <h2 class="contact__title">Let's build something together</h2>
         <p class="contact__lead">
           I'm currently working as a software engineer at KBR, but I'm always happy to
-          chat about a project or connect with other engineers. The fastest way to reach me is email.
+          chat about a project or connect with other engineers. Send me a message below.
         </p>
 
-        <!-- mailto opens the visitor's default email client -->
-        <a class="btn btn--primary btn--lg" href="mailto:danielmattioli2005@gmail.com?subject=Hello%20Daniel">
-          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          danielmattioli2005@gmail.com
-        </a>
+        <form class="contact-form" id="contactForm" name="contact" method="POST"
+              data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact" />
+          <p class="contact-form__trap">
+            <label>Leave this empty: <input name="bot-field" tabindex="-1" autocomplete="off" /></label>
+          </p>
+
+          <div class="contact-form__row">
+            <label class="contact-form__field">
+              <span>Name</span>
+              <input type="text" name="name" autocomplete="name" required maxlength="100" />
+            </label>
+            <label class="contact-form__field">
+              <span>Email</span>
+              <input type="email" name="email" autocomplete="email" required maxlength="200" />
+            </label>
+          </div>
+          <label class="contact-form__field">
+            <span>Subject</span>
+            <input type="text" name="subject" maxlength="150" />
+          </label>
+          <label class="contact-form__field">
+            <span>Message</span>
+            <textarea name="message" rows="5" required maxlength="5000"></textarea>
+          </label>
+
+          <button class="btn btn--primary btn--lg contact-form__submit" type="submit">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Send message</span>
+          </button>
+          <p class="contact-form__status" id="contactStatus" role="status" aria-live="polite"></p>
+        </form>
+
+        <p class="contact__alt">
+          Prefer email? <a href="mailto:danielmattioli2005@gmail.com?subject=Hello%20Daniel">danielmattioli2005@gmail.com</a>
+        </p>
 
         <!-- Secondary contact / profile links --> 
         <div class="contact__socials">

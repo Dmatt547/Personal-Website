@@ -10,6 +10,7 @@
      6. Scroll effects    - progress bar + parallax background glows
      7. Count-up stats    - animate the About numbers when seen
      8. Case study modal  - open a project's case study in a popup
+     9. Contact form      - send the message without leaving the page
    ============================================================ */
 
 /* ------------------------------------------------------------
@@ -237,4 +238,41 @@ modal.addEventListener("click", (event) => {
 // Close when Escape is pressed
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" && modal.classList.contains("open")) closeCaseStudy();
+});
+
+/* ------------------------------------------------------------
+   9. Contact form
+   Posts the form to Netlify in the background, the same way a
+   normal submit would, then shows a success or error message.
+   Without JS the form still submits normally to Netlify.
+   ------------------------------------------------------------ */
+const contactForm = document.getElementById("contactForm");
+const contactStatus = document.getElementById("contactStatus");
+
+function showContactStatus(text, type) {
+  contactStatus.textContent = text;
+  contactStatus.className = "contact-form__status is-" + type;
+}
+
+contactForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const button = contactForm.querySelector("button[type=submit]");
+  button.disabled = true;
+  showContactStatus("Sending...", "pending");
+
+  try {
+    const response = await fetch("/", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams(new FormData(contactForm)).toString(),
+    });
+    if (!response.ok) throw new Error("Status " + response.status);
+
+    contactForm.reset();
+    showContactStatus("Thanks! Your message has been sent. I'll get back to you soon.", "success");
+  } catch (err) {
+    showContactStatus("Sorry, that didn't send. Please try again or email me directly.", "error");
+  } finally {
+    button.disabled = false;
+  }
 });

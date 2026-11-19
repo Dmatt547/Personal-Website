@@ -584,7 +584,7 @@ img { display: block; max-width: 100%; }
 
 /* ============================================================
    11. CONTACT
-   A single centred card with a mailto button and links.
+   A single centred card with the message form and links.
    ============================================================ */
 .contact {
   text-align: center;
@@ -623,6 +623,35 @@ img { display: block; max-width: 100%; }
   transition: color .2s, border-color .2s, transform .2s;
 }
 .contact__social:hover { color: var(--text); border-color: var(--accent); transform: translateY(-2px); }
+
+/* Message form (sent via Netlify Forms, see main.js section 9) */
+.contact-form { position: relative; display: grid; gap: 1rem; text-align: left; }
+.contact-form__row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.contact-form__field { display: grid; gap: 0.4rem; }
+.contact-form__field span { font-size: 0.85rem; color: var(--text-soft); }
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  font: inherit;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 0.9rem;
+  transition: border-color .2s, background .2s;
+}
+.contact-form textarea { resize: vertical; min-height: 130px; }
+.contact-form input:focus,
+.contact-form textarea:focus { outline: none; border-color: var(--accent); background: var(--surface); }
+.contact-form__submit { justify-self: center; margin-top: 0.4rem; }
+.contact-form__submit:disabled { opacity: 0.6; cursor: wait; transform: none; }
+.contact-form__trap { position: absolute; left: -9999px; }   /* honeypot, hidden from people */
+.contact-form__status { text-align: center; font-size: 0.92rem; min-height: 1.4em; color: var(--text-soft); }
+.contact-form__status.is-success { color: #9ece6a; }
+.contact-form__status.is-error { color: #f7768e; }
+.contact__alt { position: relative; margin-top: 1.4rem; font-size: 0.9rem; color: var(--text-mute); }
+.contact__alt a { color: var(--accent); }
+.contact__alt a:hover { text-decoration: underline; }
 
 
 /* ============================================================
@@ -707,6 +736,7 @@ img { display: block; max-width: 100%; }
 
 /* Phone: switch to the hamburger menu and single-column grids */
 @media (max-width: 760px) {
+  .contact-form__row { grid-template-columns: 1fr; }
   html { scroll-padding-top: 76px; }
   .nav { padding: 0.9rem 1.25rem; }
   .nav__links { display: none; }          /* hide desktop links */
