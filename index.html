@@ -59,6 +59,11 @@
 
     <link rel="icon" type="image/png" href="./assets/Daniel-Mattioli-logo.png" />
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- Apply the saved light/dark choice before the page paints, so it doesn't flash -->
+    <script>
+      try { if (localStorage.getItem("theme") === "light") document.documentElement.dataset.theme = "light"; } catch (e) {}
+    </script>
   </head>
 
   <body>
@@ -94,8 +99,16 @@
         <a href="#contact">Contact</a>
       </nav>
 
-      <!-- Resume button + hamburger toggle -->
+      <!-- Command palette, theme toggle, resume button + hamburger toggle -->
       <div class="nav__actions">
+        <button class="nav__icon-btn nav__icon-btn--cmd" id="paletteOpen" type="button" aria-label="Open command palette">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5" stroke-linecap="round"/></svg>
+          <kbd id="paletteKey">Ctrl K</kbd>
+        </button>
+        <button class="nav__icon-btn" id="themeToggle" type="button" aria-label="Switch to light theme">
+          <svg class="theme-icon--moon" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" stroke-linejoin="round"/></svg>
+          <svg class="theme-icon--sun" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" stroke-linecap="round"/></svg>
+        </button>
         <a class="btn btn--ghost btn--sm" href="./assets/Daniel-Mattioli-Resume.pdf" target="_blank" rel="noopener">Resume</a>
         <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
           <span></span><span></span><span></span>
@@ -128,7 +141,9 @@
 
         <h1 class="hero__title">
           Hi, I'm Daniel.<br />
-          I build <span class="grad-text">full-stack</span> &amp; connected systems.
+          <!-- main.js cycles the word in #typedWord; screen readers get the sr-only line instead -->
+          <span class="sr-only">I build full-stack apps, IoT systems and APIs.</span>
+          <span aria-hidden="true">I build <span class="grad-text" id="typedWord">full-stack apps</span><span class="typed-caret"></span></span>
         </h1>
 
         <p class="hero__lead">
@@ -171,10 +186,10 @@
             <source srcset="./assets/profile-pic.webp" type="image/webp" />
             <img src="./assets/Profile Pic1.png" alt="Daniel Mattioli" width="663" height="700" fetchpriority="high" />
           </picture>
-        </div>
-        <div class="portrait-badge">
-          <span class="portrait-badge__num">2026</span>
-          <span class="portrait-badge__label">Graduating</span>
+          <div class="portrait-badge">
+            <span class="portrait-badge__num">2026</span>
+            <span class="portrait-badge__label">Graduating</span>
+          </div>
         </div>
       </div>
     </section>
@@ -220,20 +235,22 @@
 
         <!-- Experience + education cards -->
         <div class="about__cards">
-          <article class="info-card reveal reveal--right">
+          <article class="info-card spotlight reveal reveal--right">
             <div class="info-card__icon">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 7h18v13H3z"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" stroke-linecap="round"/></svg>
             </div>
             <h3>Experience</h3>
 
-            <!-- Timeline of roles, newest first. Add more by copying a .timeline__item. -->
+            <!-- Timeline of roles, newest first. Add more by copying a .timeline__item.
+                 data-start / data-end (YYYY-MM-DD) let main.js (section 17) add a live
+                 "Now" or "Starts in N days" badge; data-progress also adds a progress bar. -->
             <ol class="timeline">
-              <li class="timeline__item">
+              <li class="timeline__item" data-start="2027-01-11" data-end="2029-01-11">
                 <p class="timeline__role">Graduate Software Engineer · Digital Development</p>
                 <p class="timeline__meta">KBR · Graduate Program (2 years, full-time) · Starting Jan 2027</p>
                 <p class="timeline__desc">Continuing in KBR's Digital Development team as a full-time graduate software engineer on the two-year graduate program.</p>
               </li>
-              <li class="timeline__item">
+              <li class="timeline__item" data-start="2026-10-19" data-end="2027-01-11" data-progress>
                 <p class="timeline__role">Software Engineering Intern · Digital Development</p>
                 <p class="timeline__meta">KBR · Internship · Oct 2026 - Jan 2027</p>
                 <p class="timeline__desc">Building and supporting software alongside the engineers in KBR's Digital Development team.</p>
@@ -251,7 +268,7 @@
             </ol>
           </article>
 
-          <article class="info-card reveal reveal--right">
+          <article class="info-card spotlight reveal reveal--right">
             <div class="info-card__icon">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m12 3 10 5-10 5L2 8l10-5z"/><path d="M6 10.5V15c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5" stroke-linecap="round"/></svg>
             </div>
@@ -278,7 +295,7 @@
       <div class="skills">
         <!-- Category: Languages and frontend -->
         <div class="skill-group reveal">
-          <h3 class="skill-group__title">Languages &amp; Frontend</h3>
+          <div class="skill-group__head"><span class="skill-group__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="m8 18-6-6 6-6M16 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><h3 class="skill-group__title">Languages &amp; Frontend</h3><span class="skill-group__count"></span></div>
           <div class="tags">
             <span class="tag">JavaScript</span>
             <span class="tag">React</span>
@@ -292,7 +309,7 @@
 
         <!-- Category: Backend and data -->
         <div class="skill-group reveal">
-          <h3 class="skill-group__title">Backend &amp; Data</h3>
+          <div class="skill-group__head"><span class="skill-group__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3"/></svg></span><h3 class="skill-group__title">Backend &amp; Data</h3><span class="skill-group__count"></span></div>
           <div class="tags">
             <span class="tag">Node.js / Express</span>
             <span class="tag">ASP.NET Core</span>
@@ -305,7 +322,7 @@
 
         <!-- Category: IoT and embedded -->
         <div class="skill-group reveal">
-          <h3 class="skill-group__title">IoT &amp; Embedded</h3>
+          <div class="skill-group__head"><span class="skill-group__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v4M15 2v4M9 18v4M15 18v4M2 9h4M2 15h4M18 9h4M18 15h4" stroke-linecap="round"/></svg></span><h3 class="skill-group__title">IoT &amp; Embedded</h3><span class="skill-group__count"></span></div>
           <div class="tags">
             <span class="tag">Arduino</span>
             <span class="tag">MQTT</span>
@@ -317,7 +334,7 @@
 
         <!-- Category: Tools and practice -->
         <div class="skill-group reveal">
-          <h3 class="skill-group__title">Tools &amp; Practice</h3>
+          <div class="skill-group__head"><span class="skill-group__icon"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18l3 3 6.3-6.3a4 4 0 0 0 5.4-5.4l-2.5 2.5-2.4-.6-.6-2.4z" stroke-linejoin="round"/></svg></span><h3 class="skill-group__title">Tools &amp; Practice</h3><span class="skill-group__count"></span></div>
           <div class="tags">
             <span class="tag">Git / GitHub</span>
             <span class="tag">Docker</span>
@@ -333,6 +350,8 @@
          6. PROJECTS
          To add a project, copy one <article class="project"> block
          and update the image, title, description, tags and links.
+         Hover clip: add data-video="./assets/clips/name.mp4" to a
+         .project__media div and a short muted clip plays on hover.
          section--alt gives this block the tinted band.
          ============================================================ -->
     <section id="projects" class="section section--alt">
@@ -343,7 +362,7 @@
 
       <div class="projects">
         <!-- Project: Bullion Tracker -->
-        <article class="project reveal">
+        <article class="project spotlight reveal">
           <div class="project__media">
             <img src="./assets/bullion-tracker.svg" alt="Bullion Tracker dashboard" loading="lazy" width="760" height="760" />
           </div>
@@ -395,7 +414,7 @@
         </article>
 
         <!-- Project: Job Tracker -->
-        <article class="project reveal">
+        <article class="project spotlight reveal">
           <div class="project__media">
             <img src="./assets/job-tracker.svg" alt="Job Tracker action queue and pipeline board" loading="lazy" width="760" height="760" />
           </div>
@@ -441,7 +460,7 @@
         </article>
 
         <!-- Project: BugBox AI Tutor Bot -->
-        <article class="project reveal">
+        <article class="project spotlight reveal">
           <div class="project__media">
             <picture>
               <source srcset="./assets/bugbox.webp" type="image/webp" />
@@ -492,7 +511,7 @@
         </article>
 
         <!-- Project: Smart Home Lighting (IoT) -->
-        <article class="project reveal">
+        <article class="project spotlight reveal">
           <div class="project__media">
             <picture>
               <source srcset="./assets/smart-home-lighting.webp" type="image/webp" />
@@ -543,7 +562,7 @@
         </article>
 
         <!-- Project: Robot Simulator API -->
-        <article class="project reveal">
+        <article class="project spotlight reveal">
           <div class="project__media">
             <picture>
               <source srcset="./assets/robot-api.webp" type="image/webp" />
@@ -593,7 +612,7 @@
         </article>
 
         <!-- Project: Farmyard Racing -->
-        <article class="project reveal">
+        <article class="project spotlight reveal">
           <div class="project__media">
             <picture>
               <source srcset="./assets/farm-yard-racing.webp" type="image/webp" />
@@ -643,7 +662,7 @@
         </article>
 
         <!-- Project: Automatic Dog Feeder -->
-        <article class="project reveal">
+        <article class="project spotlight reveal">
           <div class="project__media">
             <picture>
               <source srcset="./assets/dog-feeder.webp" type="image/webp" />
@@ -693,7 +712,7 @@
         </article>
 
         <!-- Project: Parallel Programming Study -->
-        <article class="project reveal">
+        <article class="project spotlight reveal">
           <div class="project__media">
             <picture>
               <source srcset="./assets/parallel-programming.webp" type="image/webp" />
@@ -768,15 +787,15 @@
 
         <!-- Three core focus areas -->
         <div class="thesis__areas">
-          <div class="thesis__area">
+          <div class="thesis__area spotlight">
             <h4>System monitoring</h4>
             <p>Collecting and tracking live health metrics from remote systems as they operate.</p>
           </div>
-          <div class="thesis__area">
+          <div class="thesis__area spotlight">
             <h4>Fault detection</h4>
             <p>Spotting failures and anomalies early, before they turn into bigger problems.</p>
           </div>
-          <div class="thesis__area">
+          <div class="thesis__area spotlight">
             <h4>Telemetry analysis</h4>
             <p>Making sense of streamed sensor and status data to understand system behaviour.</p>
           </div>
@@ -798,6 +817,110 @@
           </div>
         </div>
 
+        <!-- Interactive demo: simulated drone telemetry with Prometheus-style alert rules (main.js section 14) -->
+        <div class="telemetry" id="telemetry">
+          <div class="telemetry__head">
+            <div>
+              <span class="telemetry__label">Interactive demo &middot; simulated data</span>
+              <h4 class="telemetry__title">Drone health monitor</h4>
+            </div>
+            <div class="telemetry__badges">
+              <span class="tel-live"><i></i>LIVE</span>
+              <span class="tel-clock" id="telClock">T+00:00</span>
+              <span class="telemetry__status" id="telStatus" data-state="ok" role="status" aria-live="polite">Healthy</span>
+            </div>
+          </div>
+          <p class="telemetry__note">
+            Inject a fault and watch the monitor catch it. Like the alert rules in my thesis, a
+            rule only fires once it has stayed breached for 3 seconds, so a brief spike doesn't
+            raise a false alarm.
+          </p>
+
+          <div class="telemetry__body">
+            <!-- Left: the drone inside a ring showing overall system health -->
+            <div class="drone-panel" id="dronePanel" data-state="ok">
+              <svg class="drone" viewBox="-110 -110 220 220" aria-hidden="true">
+                <defs>
+                  <radialGradient id="droneGlow">
+                    <stop offset="0%" stop-color="currentColor" stop-opacity="0.22" />
+                    <stop offset="100%" stop-color="currentColor" stop-opacity="0" />
+                  </radialGradient>
+                </defs>
+                <circle class="drone__glow" r="92" fill="url(#droneGlow)" />
+                <circle class="drone__ring-track" r="100" />
+                <circle class="drone__ring" id="healthRing" r="100" pathLength="100" />
+                <g class="drone__craft">
+                  <line class="drone__arm" x1="-46" y1="-46" x2="46" y2="46" />
+                  <line class="drone__arm" x1="46" y1="-46" x2="-46" y2="46" />
+                  <g class="drone__motor" data-motor="fl" transform="translate(-46 -46)"><circle r="11" /><g class="drone__rotor"><ellipse rx="27" ry="3.5" /><ellipse rx="3.5" ry="27" /></g></g>
+                  <g class="drone__motor drone__motor--hot" data-motor="fr" transform="translate(46 -46)"><circle r="11" /><g class="drone__rotor"><ellipse rx="27" ry="3.5" /><ellipse rx="3.5" ry="27" /></g></g>
+                  <g class="drone__motor" data-motor="bl" transform="translate(-46 46)"><circle r="11" /><g class="drone__rotor"><ellipse rx="27" ry="3.5" /><ellipse rx="3.5" ry="27" /></g></g>
+                  <g class="drone__motor" data-motor="br" transform="translate(46 46)"><circle r="11" /><g class="drone__rotor"><ellipse rx="27" ry="3.5" /><ellipse rx="3.5" ry="27" /></g></g>
+                  <rect class="drone__body" x="-19" y="-25" width="38" height="50" rx="11" />
+                  <circle class="drone__cam" cy="-15" r="4" />
+                  <circle class="drone__led" cy="12" r="3.5" />
+                </g>
+              </svg>
+              <div class="drone-panel__health">
+                <strong id="healthValue">100</strong><span>% system health</span>
+              </div>
+              <dl class="drone-panel__stats">
+                <div><dt>Samples</dt><dd id="telSamples">0</dd></div>
+                <div><dt>Scrape rate</dt><dd>2 Hz</dd></div>
+                <div><dt>Alerts fired</dt><dd id="telFired">0</dd></div>
+              </dl>
+            </div>
+
+            <!-- Right: one live chart per metric -->
+            <div class="telemetry__grid">
+              <div class="metric" data-metric="battery">
+                <div class="metric__top"><span>Battery</span><strong><span data-value>--</span><small>%</small></strong></div>
+                <canvas aria-hidden="true"></canvas>
+                <div class="metric__rule">alert if &lt; 25% for 3s</div>
+              </div>
+              <div class="metric" data-metric="temp">
+                <div class="metric__top"><span>Motor temp</span><strong><span data-value>--</span><small>&deg;C</small></strong></div>
+                <canvas aria-hidden="true"></canvas>
+                <div class="metric__rule">alert if &gt; 70&deg;C for 3s</div>
+              </div>
+              <div class="metric" data-metric="link">
+                <div class="metric__top"><span>Link quality</span><strong><span data-value>--</span><small>%</small></strong></div>
+                <canvas aria-hidden="true"></canvas>
+                <div class="metric__rule">alert if &lt; 40% for 3s</div>
+              </div>
+              <div class="metric" data-metric="altitude">
+                <div class="metric__top"><span>Altitude</span><strong><span data-value>--</span><small> m</small></strong></div>
+                <canvas aria-hidden="true"></canvas>
+                <div class="metric__rule">no alert rule</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="telemetry__controls">
+            <span>Inject a fault:</span>
+            <button class="fault-btn" type="button" data-fault="battery">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="17" height="10" rx="2"/><path d="M22 11v2M6 11v2" stroke-linecap="round"/></svg>
+              Battery sag
+            </button>
+            <button class="fault-btn" type="button" data-fault="temp">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 14.8V4a2 2 0 0 0-4 0v10.8a4 4 0 1 0 4 0z" stroke-linejoin="round"/></svg>
+              Motor overheat
+            </button>
+            <button class="fault-btn" type="button" data-fault="link">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 8.8a15 15 0 0 1 20 0M5 12.5a10 10 0 0 1 14 0M8.5 16a5 5 0 0 1 7 0" stroke-linecap="round"/><path d="m3 3 18 18" stroke-linecap="round"/></svg>
+              Link loss
+            </button>
+            <button class="fault-btn fault-btn--reset" type="button" id="telReset">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 3-6.7L3 8M3 3v5h5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Reset
+            </button>
+          </div>
+
+          <ol class="telemetry__log" id="telLog" aria-label="Alert log">
+            <li class="telemetry__log-empty">No alerts. All systems nominal.</li>
+          </ol>
+        </div>
+
         <!-- Opens the full thesis PDF and the source code in a new tab -->
         <div class="thesis__cta">
           <a class="btn btn--primary" href="./assets/Daniel-Mattioli-Thesis.pdf" target="_blank" rel="noopener" download>
@@ -813,10 +936,82 @@
     </section>
 
     <!-- ============================================================
-         6c. COLOPHON
+         6c. RECENTLY ON GITHUB
+         A live dashboard filled by main.js (section 15): headline
+         numbers, contribution calendar, language split and my most
+         recently pushed repos. Skeleton cards show while it loads.
+         ============================================================ -->
+    <section id="github" class="section section--alt">
+      <div class="section__head reveal">
+        <span class="section__kicker">Open source</span>
+        <h2 class="section__title">Recently on GitHub</h2>
+      </div>
+
+      <div class="gh reveal" id="gh">
+        <!-- Headline numbers -->
+        <div class="gh__stats">
+          <div class="gh-stat spotlight">
+            <span class="gh-stat__num" data-gh="contributions">&ndash;</span>
+            <span class="gh-stat__label">Contributions in the last year</span>
+          </div>
+          <div class="gh-stat spotlight">
+            <span class="gh-stat__num" data-gh="repos">&ndash;</span>
+            <span class="gh-stat__label">Public repositories</span>
+          </div>
+          <div class="gh-stat spotlight">
+            <span class="gh-stat__num" data-gh="streak">&ndash;</span>
+            <span class="gh-stat__label">Longest streak (days)</span>
+          </div>
+          <div class="gh-stat spotlight">
+            <span class="gh-stat__num" data-gh="languages">&ndash;</span>
+            <span class="gh-stat__label">Languages used</span>
+          </div>
+        </div>
+
+        <!-- Contribution calendar + language split -->
+        <div class="gh__panels">
+          <div class="gh-panel gh-panel--calendar">
+            <div class="gh-panel__head">
+              <h3>Contribution activity</h3>
+              <span class="gh-panel__sub" id="ghBusiest"></span>
+            </div>
+            <div class="gh-cal" id="ghCalendar" role="img" aria-label="Contribution calendar for the last year">
+              <div class="gh-cal__months" id="ghCalMonths"></div>
+              <div class="gh-cal__grid" id="ghCalGrid"></div>
+            </div>
+            <div class="gh-cal__summary" id="ghCalSummary"></div>
+            <div class="gh-cal__legend" aria-hidden="true">
+              Less <i data-level="0"></i><i data-level="1"></i><i data-level="2"></i><i data-level="3"></i><i data-level="4"></i> More
+            </div>
+          </div>
+
+          <div class="gh-panel">
+            <div class="gh-panel__head">
+              <h3>Languages</h3>
+              <span class="gh-panel__sub">by repository</span>
+            </div>
+            <div class="gh-langbar" id="ghLangBar"></div>
+            <ul class="gh-langs" id="ghLangs"></ul>
+          </div>
+        </div>
+
+        <!-- Latest repos (the first one is featured with its latest commit) -->
+        <div class="repos" id="repoList" aria-live="polite">
+          <div class="repo repo--featured repo--skeleton" aria-hidden="true"></div>
+          <div class="repo repo--skeleton" aria-hidden="true"></div>
+          <div class="repo repo--skeleton" aria-hidden="true"></div>
+          <div class="repo repo--skeleton" aria-hidden="true"></div>
+          <div class="repo repo--skeleton" aria-hidden="true"></div>
+        </div>
+      </div>
+      <a class="btn btn--ghost repos__more" href="https://github.com/Dmatt547" target="_blank" rel="noopener">See everything on GitHub &#8594;</a>
+    </section>
+
+    <!-- ============================================================
+         6d. COLOPHON
          A nod to the fact that this site is itself a hand-built project.
          ============================================================ -->
-    <section id="colophon" class="section section--alt">
+    <section id="colophon" class="section">
       <div class="section__head reveal">
         <span class="section__kicker">Behind the scenes</span>
         <h2 class="section__title">This site is a project </h2>
@@ -839,7 +1034,27 @@
         </div>
 
         <div class="about__cards">
-          <article class="info-card reveal reveal--right">
+          <!-- Live numbers about this page, measured in the visitor's browser (main.js section 17) -->
+          <article class="info-card build spotlight reveal reveal--right">
+            <div class="build__head">
+              <h3>Live build stats</h3>
+              <span class="build__note"><span class="pulse-dot"></span>measured in your browser</span>
+            </div>
+            <div class="build__stats">
+              <div><strong data-build="load">&ndash;</strong><span>ms to load</span></div>
+              <div><strong data-build="weight">&ndash;</strong><span>KB transferred</span></div>
+              <div><strong data-build="requests">&ndash;</strong><span>requests</span></div>
+              <div><strong>0</strong><span>frameworks</span></div>
+            </div>
+            <div class="build__loc">
+              <div class="build__loc-head"><span>Lines of hand-written code</span><strong data-build="lines">&ndash;</strong></div>
+              <div class="gh-langbar" id="locBar"></div>
+              <ul class="gh-langs" id="locLegend"></ul>
+            </div>
+            <p class="build__deploy" id="buildDeploy">Last updated: checking GitHub...</p>
+          </article>
+
+          <article class="info-card spotlight reveal reveal--right">
             <div class="info-card__icon">
               <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8"><path d="m8 18-6-6 6-6M16 6l6 6-6 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
             </div>
@@ -863,7 +1078,7 @@
          main.js sends it in the background so the page doesn't reload.
          The hidden "bot-field" is a honeypot that catches spam bots.
          ============================================================ -->
-    <section id="contact" class="section">
+    <section id="contact" class="section section--alt">
       <div class="contact reveal">
         <span class="section__kicker">Contact</span>
         <h2 class="contact__title">Let's build something together</h2>
@@ -871,6 +1086,13 @@
           I'm currently working as a software engineer at KBR, but I'm always happy to
           chat about a project or connect with other engineers. Send me a message below.
         </p>
+
+        <div class="contact__status">
+          <span class="pulse-dot"></span>
+          <span id="contactClock">Melbourne, Australia</span>
+          <span class="contact__status-sep">&middot;</span>
+          <span>Messages go straight to my inbox</span>
+        </div>
 
         <form class="contact-form" id="contactForm" name="contact" method="POST"
               data-netlify="true" netlify-honeypot="bot-field">
@@ -942,11 +1164,33 @@
     </div>
 
     <!-- ============================================================
+         COMMAND PALETTE
+         Opens with Ctrl/Cmd + K or the search button in the nav.
+         main.js (section 11) builds the list of commands.
+         ============================================================ -->
+    <div class="palette" id="palette" hidden>
+      <div class="palette__backdrop" data-palette-close></div>
+      <div class="palette__dialog" role="dialog" aria-modal="true" aria-label="Command palette">
+        <input class="palette__input" id="paletteInput" type="text" placeholder="Type a command or search..."
+               autocomplete="off" spellcheck="false" role="combobox" aria-controls="paletteList" aria-expanded="true" />
+        <ul class="palette__list" id="paletteList" role="listbox"></ul>
+        <div class="palette__hint">&uarr; &darr; to move &middot; Enter to select &middot; Esc to close</div>
+      </div>
+    </div>
+
+    <!-- Small pop-up message (e.g. "Email copied") -->
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <!-- ============================================================
          9. FOOTER
          The year is filled in automatically by main.js.
          ============================================================ -->
     <footer class="footer">
       <p>&copy; <span id="year"></span> Daniel Mattioli - Designed &amp; built in Melbourne.</p>
+      <p class="footer__meta">
+        <span id="footerUpdated">Hand-built with no frameworks</span>
+        <a href="#hero">Back to top &uarr;</a>
+      </p>
     </footer>
 
     <!-- All interactive behaviour lives here -->
